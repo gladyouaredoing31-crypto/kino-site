@@ -3,582 +3,432 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ГЕНЕРАТОР ПАРОЛЕЙ</title>
+<title>@ ЮЗЕРНЕЙМЫ</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
 html,body{height:100%;overflow:hidden;background:#0a0e14;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;color:#e6edf3}
 
 .app{position:relative;width:100vw;height:100vh;max-width:480px;margin:0 auto;background:radial-gradient(circle at 50% 0%,#1a2545,#0a0e14 60%);display:flex;flex-direction:column;overflow:hidden}
 
-/* ТАБЫ */
-.tabs{display:flex;gap:4px;background:#161b22;padding:6px;margin:12px 16px 0;border-radius:12px;flex-shrink:0}
-.tab{flex:1;background:transparent;border:none;color:#8b949e;padding:10px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;transition:.2s;text-transform:uppercase;letter-spacing:.5px;position:relative}
-.tab.active{background:linear-gradient(135deg,#f0b429,#b8860b);color:#000}
-.tab:active{transform:scale(.97)}
-.tab .badge{display:inline-block;background:#3fb950;color:#000;font-size:9px;font-weight:900;padding:1px 5px;border-radius:8px;margin-left:4px}
-
 /* ШАПКА */
-.header{padding:20px 16px 12px;text-align:center;flex-shrink:0}
-.logo{font-size:24px;font-weight:900;background:linear-gradient(135deg,#f0b429,#ff6b6b,#f0b429);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shine 3s infinite;letter-spacing:2px}
+.header{padding:16px 16px 8px;text-align:center;flex-shrink:0}
+.logo{font-size:24px;font-weight:900;background:linear-gradient(135deg,#58a6ff,#a855f7,#58a6ff);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shine 3s infinite;letter-spacing:2px}
 @keyframes shine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
 .subtitle{font-size:10px;color:#8b949e;letter-spacing:4px;text-transform:uppercase;margin-top:4px}
 
 /* КОНТЕНТ */
-.content{flex:1;overflow-y:auto;padding:16px;scrollbar-width:thin}
+.content{flex:1;overflow-y:auto;padding:12px 16px;scrollbar-width:thin}
 .content::-webkit-scrollbar{width:4px}
 .content::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px}
-.content.hidden{display:none}
 
-/* ПАРОЛЬ */
-.password-box{background:linear-gradient(135deg,#161b22,#1c2333);border:2px solid #f0b429;border-radius:18px;padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden}
-.password-box::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(240,180,41,.15),transparent);animation:sweep 4s infinite}
-@keyframes sweep{0%{left:-100%}100%{left:100%}}
-.password-label{font-size:10px;color:#8b949e;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:800}
-.password-text{font-size:19px;font-weight:900;font-family:'Courier New',monospace;color:#3fb950;word-break:break-all;line-height:1.4;min-height:60px;letter-spacing:1px;position:relative;z-index:1;text-shadow:0 0 12px rgba(63,185,80,.4);transition:.2s}
-.password-text.empty{color:#4a5568;text-shadow:none}
+/* СТИЛИ */
+.section-title{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:800;padding-left:2px}
+.styles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.style-btn{background:linear-gradient(135deg,#161b22,#1c2333);border:2px solid #30363d;border-radius:12px;padding:12px 10px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.style-btn:active{transform:scale(.96)}
+.style-btn.active{border-color:#58a6ff;background:linear-gradient(135deg,#1c2333,#1a2545);box-shadow:0 0 0 2px rgba(88,166,255,.3),0 0 20px rgba(88,166,255,.3)}
+.style-emoji{font-size:24px}
+.style-name{font-size:12px;font-weight:800;letter-spacing:.5px}
+.style-desc{font-size:9px;color:#8b949e;line-height:1.2}
 
-/* НАДЁЖНОСТЬ */
-.strength-wrap{margin-top:14px;position:relative;z-index:1}
-.strength-bar{height:10px;background:#0a0e14;border-radius:5px;overflow:hidden;margin-bottom:6px}
-.strength-fill{height:100%;border-radius:5px;transition:.4s;width:0%}
-.strength-fill.weak{background:linear-gradient(90deg,#f85149,#ff6b6b)}
-.strength-fill.mid{background:linear-gradient(90deg,#f0b429,#ffd866)}
-.strength-fill.good{background:linear-gradient(90deg,#3fb950,#7ee787)}
-.strength-fill.strong{background:linear-gradient(90deg,#3fb950,#79c0ff,#a855f7)}
-.strength-label{display:flex;justify-content:space-between;font-size:11px;font-weight:800;letter-spacing:1px}
-.strength-label .text{color:#8b949e}
-.strength-label .val{color:#fff}
+/* ДЛИНА */
+.length-row{display:flex;gap:6px;margin-bottom:14px}
+.length-btn{flex:1;background:#161b22;border:2px solid #30363d;border-radius:10px;padding:10px 4px;color:#8b949e;font-size:12px;font-weight:800;cursor:pointer;transition:.15s}
+.length-btn:active{transform:scale(.96)}
+.length-btn.active{background:linear-gradient(180deg,#58a6ff,#1f6feb);color:#fff;border-color:#79c0ff}
 
-/* КНОПКА СОЗДАТЬ */
-.refresh-btn{width:100%;background:linear-gradient(180deg,#f0b429,#b8860b);border:2px solid #ffd866;color:#000;padding:16px;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;transition:.1s;box-shadow:0 6px 20px rgba(240,180,41,.4);display:flex;align-items:center;justify-content:center;gap:8px}
-.refresh-btn:active{transform:scale(.97)}
-.refresh-btn .ic{font-size:20px}
+/* КНОПКА ГЕНЕРАЦИИ */
+.gen-btn{width:100%;background:linear-gradient(180deg,#58a6ff,#1f6feb);border:2px solid #79c0ff;color:#fff;padding:16px;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;transition:.1s;box-shadow:0 6px 20px rgba(88,166,255,.5);display:flex;align-items:center;justify-content:center;gap:8px}
+.gen-btn:active{transform:scale(.97);box-shadow:0 3px 10px rgba(88,166,255,.4)}
 
-/* КНОПКИ ДЕЙСТВИЙ */
-.actions{display:flex;gap:8px;margin-bottom:16px}
-.action-btn{flex:1;background:#161b22;border:2px solid #30363d;color:#fff;padding:12px;border-radius:12px;font-size:12px;font-weight:800;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:6px}
-.action-btn:active{transform:scale(.95);background:#1c2333;border-color:#f0b429;color:#f0b429}
-.action-btn.primary{background:linear-gradient(180deg,#3fb950,#1a7f37);border-color:#7ee787;color:#fff}
-.action-btn.primary:active{background:linear-gradient(180deg,#1a7f37,#0d4f1f);color:#fff}
-.action-btn.copy-success{background:linear-gradient(180deg,#3fb950,#1a7f37);border-color:#7ee787;color:#fff}
+/* РЕЗУЛЬТАТЫ */
+.results-info{font-size:11px;color:#8b949e;margin-bottom:10px;text-align:center;padding:6px}
+.results-info b{color:#58a6ff}
 
-/* СЕКЦИЯ */
-.section-title{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:800;padding-left:4px;display:flex;justify-content:space-between;align-items:center}
-.section-title .count{background:#30363d;color:#c9d1d9;font-size:10px;padding:2px 8px;border-radius:10px;letter-spacing:0}
+.username-card{background:linear-gradient(135deg,#161b22,#1c2333);border:2px solid #30363d;border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:.15s;cursor:pointer}
+.username-card:active{transform:scale(.98)}
+.username-card:hover{border-color:#58a6ff}
+.username-card.fav{border-color:#ff6b6b;background:linear-gradient(135deg,#1f1520,#2a1a1f)}
 
-/* НАСТРОЙКИ */
-.settings{background:linear-gradient(135deg,#161b22,#1c2333);border:2px solid #30363d;border-radius:14px;padding:14px;margin-bottom:14px}
-.setting-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #21262d}
-.setting-row:last-child{border-bottom:none;padding-bottom:0}
-.setting-row:first-child{padding-top:0}
-.setting-label{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
-.setting-label .ic{font-size:18px}
-.setting-label .sub{font-size:10px;color:#6a737d;font-weight:400;margin-top:2px}
+.username-text{font-family:'Courier New',monospace;font-size:16px;font-weight:800;color:#79c0ff;flex:1;word-break:break-all;line-height:1.2}
+.username-text .at{color:#f0b429}
+.username-length{font-size:9px;color:#6a737d;font-weight:700;background:#0a0e14;padding:2px 6px;border-radius:6px;flex-shrink:0}
 
-.toggle{position:relative;width:52px;height:30px;flex-shrink:0}
-.toggle input{display:none}
-.toggle .slider{position:absolute;inset:0;background:#30363d;border-radius:15px;cursor:pointer;transition:.3s}
-.toggle .slider::before{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:4px;left:4px;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.4)}
-.toggle input:checked + .slider{background:linear-gradient(90deg,#3fb950,#1a7f37)}
-.toggle input:checked + .slider::before{transform:translateX(22px)}
+.username-actions{display:flex;gap:4px;flex-shrink:0}
+.us-btn{background:#0a0e14;border:1px solid #30363d;color:#c9d1d9;width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.us-btn:active{transform:scale(.9);background:#1c2333}
+.us-btn.copied{background:#3fb950;border-color:#7ee787;color:#fff}
+.us-btn.fav-active{background:#ff6b6b;border-color:#ff6b6b;color:#fff}
 
-.length-display{text-align:center;font-size:36px;font-weight:900;color:#f0b429;margin:6px 0;font-variant-numeric:tabular-nums;text-shadow:0 0 20px rgba(240,180,41,.4)}
-.length-slider{width:100%;-webkit-appearance:none;appearance:none;height:8px;background:#0a0e14;border-radius:4px;outline:none;margin:10px 0}
-.length-slider::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#f0b429,#b8860b);border:2px solid #ffd866;cursor:pointer;box-shadow:0 2px 8px rgba(240,180,41,.5)}
-.length-slider::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#f0b429,#b8860b);border:2px solid #ffd866;cursor:pointer}
-.length-range-labels{display:flex;justify-content:space-between;font-size:10px;color:#6a737d;font-weight:700}
+/* ПУСТО */
+.empty{text-align:center;padding:50px 20px;color:#6a737d}
+.empty .big{font-size:56px;margin-bottom:14px;opacity:.4}
+.empty h3{font-size:15px;margin-bottom:6px;color:#c9d1d9}
+.empty p{font-size:12px;line-height:1.5}
 
-/* СОХРАНЁННЫЕ ПАРОЛИ */
-.search-box{width:100%;background:#161b22;border:2px solid #30363d;border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:12px;transition:.2s}
-.search-box:focus{outline:none;border-color:#f0b429;background:#1c2333}
-.search-box::placeholder{color:#6a737d}
+/* ТАБЫ */
+.tabs{display:flex;gap:4px;background:#161b22;padding:6px;margin:0 16px;border-radius:12px;flex-shrink:0}
+.tab{flex:1;background:transparent;border:none;color:#8b949e;padding:9px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;transition:.2s;text-transform:uppercase;letter-spacing:.5px}
+.tab.active{background:linear-gradient(135deg,#58a6ff,#1f6feb);color:#fff}
+.tab:active{transform:scale(.97)}
 
-.saved-item{background:linear-gradient(135deg,#161b22,#1c2333);border:2px solid #30363d;border-radius:12px;padding:12px;margin-bottom:8px;transition:.15s}
-.saved-item.expanded{border-color:#f0b429}
-.saved-header{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.saved-name{font-size:14px;font-weight:900;color:#fff;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.saved-date{font-size:10px;color:#6a737d}
-.saved-pass{font-family:'Courier New',monospace;font-size:14px;font-weight:700;color:#3fb950;word-break:break-all;margin-top:8px;padding:8px 10px;background:#0a0e14;border-radius:8px;line-height:1.4;position:relative}
-.saved-pass .hidden-pass{color:#6a737d;letter-spacing:2px}
-.saved-actions{display:flex;gap:6px;margin-top:8px}
-.saved-btn{flex:1;background:#0a0e14;border:1px solid #30363d;color:#c9d1d9;padding:8px;border-radius:8px;font-size:11px;font-weight:800;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:4px}
-.saved-btn:active{transform:scale(.95);background:#1c2333}
-.saved-btn.danger{border-color:#f85149;color:#f85149}
-.saved-btn.danger:active{background:rgba(248,81,73,.15)}
-
-.empty-saved{text-align:center;padding:40px 20px;color:#6a737d}
-.empty-saved .big{font-size:50px;margin-bottom:12px;opacity:.4}
-.empty-saved h3{font-size:15px;margin-bottom:6px;color:#c9d1d9}
-.empty-saved p{font-size:12px;line-height:1.5}
-
-/* МОДАЛКА СОХРАНЕНИЯ */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;display:none;align-items:flex-end;backdrop-filter:blur(6px);animation:fadeIn .2s}
-.modal.show{display:flex}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal-content{width:100%;max-width:480px;margin:0 auto;background:#0d1117;border-radius:20px 20px 0 0;padding:20px;max-height:85vh;overflow-y:auto;animation:slideUp .3s}
-@keyframes slideUp{from{transform:translateY(60px)}to{transform:translateY(0)}}
-.modal-title{font-size:18px;font-weight:900;margin-bottom:6px;text-align:center;color:#3fb950}
-.modal-sub{font-size:12px;color:#8b949e;text-align:center;margin-bottom:16px}
-.modal-pass-preview{background:#0a0e14;border:1px solid #30363d;border-radius:10px;padding:10px;font-family:'Courier New',monospace;font-size:13px;color:#3fb950;word-break:break-all;text-align:center;margin-bottom:16px;line-height:1.4}
-
-.form-group{margin-bottom:14px}
-.form-label{font-size:12px;color:#8b949e;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block;font-weight:700}
-.form-input{width:100%;background:#161b22;border:2px solid #30363d;border-radius:10px;padding:12px 14px;color:#fff;font-size:15px;font-family:inherit;transition:.2s}
-.form-input:focus{outline:none;border-color:#3fb950;background:#1c2333}
-.form-input::placeholder{color:#6a737d}
-
-.quick-names{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-.quick-name{background:#161b22;border:1px solid #30363d;color:#c9d1d9;padding:6px 12px;border-radius:16px;font-size:12px;cursor:pointer;transition:.2s}
-.quick-name:active{transform:scale(.95);background:#1c2333;border-color:#3fb950}
-
-.btn{width:100%;background:linear-gradient(180deg,#3fb950,#1a7f37);border:none;color:#fff;padding:14px;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:1px;margin-top:8px;transition:.1s}
-.btn:active{transform:scale(.97)}
-.btn.cancel{background:#21262d;color:#8b949e;margin-top:6px}
-.btn.red{background:linear-gradient(180deg,#f85149,#b62324)}
+.hidden{display:none!important}
 
 /* TOAST */
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#161b22;border:2px solid #3fb950;color:#3fb950;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;transition:.3s;z-index:200;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.5)}
 .toast.show{transform:translateX(-50%) translateY(0)}
-
-@keyframes fadeInPass{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.password-text.animate{animation:fadeInPass .25s}
 </style>
 </head>
 <body>
 
 <div class="app">
 
+  <!-- ШАПКА -->
+  <div class="header">
+    <div class="logo">@ ЮЗЕРНЕЙМЫ</div>
+    <div class="subtitle">Красивые для Telegram</div>
+  </div>
+
   <!-- ТАБЫ -->
-  <div class="tabs">
-    <button class="tab active" id="tabGen" onclick="setTab('gen')">🎲 Создать</button>
-    <button class="tab" id="tabSaved" onclick="setTab('saved')">🔐 Мои пароли <span class="badge" id="savedCount">0</span></button>
+  <div class="tabs" style="margin-bottom:12px">
+    <button class="tab active" id="tabGen" onclick="setTab('gen')">🎲 Генератор</button>
+    <button class="tab" id="tabFav" onclick="setTab('fav')">❤️ Избранное</button>
   </div>
 
   <!-- ЭКРАН ГЕНЕРАЦИИ -->
   <div class="content" id="content-gen">
-    <div class="header" style="padding:12px 0">
-      <div class="logo">🔐 ГЕНЕРАТОР</div>
-      <div class="subtitle">Паролей</div>
-    </div>
 
-    <div class="password-box">
-      <div class="password-label">Твой пароль</div>
-      <div class="password-text empty" id="password">Нажми «Создать»</div>
-      <div class="strength-wrap">
-        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
-        <div class="strength-label">
-          <span class="text">Надёжность:</span>
-          <span class="val" id="strengthText">—</span>
-        </div>
-      </div>
-    </div>
+    <div class="section-title">🎨 Выбери стиль</div>
+    <div class="styles" id="stylesGrid"></div>
 
-    <button class="refresh-btn" onclick="generatePassword()">
-      <span class="ic">🎲</span> СОЗДАТЬ ПАРОЛЬ
+    <div class="section-title">📏 Длина</div>
+    <div class="length-row" id="lengthRow"></div>
+
+    <button class="gen-btn" onclick="generate()">
+      <span style="font-size:20px">🎲</span> СГЕНЕРИРОВАТЬ
     </button>
 
-    <div class="actions">
-      <button class="action-btn" id="copyBtn" onclick="copyPassword()">📋 Копировать</button>
-      <button class="action-btn primary" onclick="openSaveModal()">💾 Сохранить</button>
-    </div>
-
-    <div class="section-title">⚙️ Настройки</div>
-
-    <div class="settings">
-      <div style="margin-bottom:16px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-          <div class="setting-label"><span class="ic">📏</span> Длина пароля</div>
-        </div>
-        <div class="length-display" id="lengthDisplay">16</div>
-        <input type="range" class="length-slider" id="lengthSlider" min="4" max="64" value="16" oninput="updateLength()">
-        <div class="length-range-labels"><span>4</span><span>32</span><span>64</span></div>
-      </div>
-
-      <div class="setting-row">
-        <div class="setting-label"><span class="ic">🔤</span><div>Строчные буквы<div class="sub">abc def ghi</div></div></div>
-        <label class="toggle"><input type="checkbox" id="optLower" checked onchange="generatePassword()"><div class="slider"></div></label>
-      </div>
-
-      <div class="setting-row">
-        <div class="setting-label"><span class="ic">🔠</span><div>Заглавные буквы<div class="sub">ABC DEF GHI</div></div></div>
-        <label class="toggle"><input type="checkbox" id="optUpper" checked onchange="generatePassword()"><div class="slider"></div></label>
-      </div>
-
-      <div class="setting-row">
-        <div class="setting-label"><span class="ic">🔢</span><div>Цифры<div class="sub">0 1 2 3 4 5</div></div></div>
-        <label class="toggle"><input type="checkbox" id="optDigits" checked onchange="generatePassword()"><div class="slider"></div></label>
-      </div>
-
-      <div class="setting-row">
-        <div class="setting-label"><span class="ic">⚡</span><div>Спецсимволы<div class="sub">!@#$%^&*()</div></div></div>
-        <label class="toggle"><input type="checkbox" id="optSymbols" checked onchange="generatePassword()"><div class="slider"></div></label>
-      </div>
-
-      <div class="setting-row">
-        <div class="setting-label"><span class="ic">👁️</span><div>Без похожих<div class="sub">убрать l 1 I O 0</div></div></div>
-        <label class="toggle"><input type="checkbox" id="optNoSimilar" onchange="generatePassword()"><div class="slider"></div></label>
-      </div>
-    </div>
+    <div id="results" style="margin-top:10px"></div>
   </div>
 
-  <!-- ЭКРАН СОХРАНЁННЫХ -->
-  <div class="content hidden" id="content-saved">
-    <div class="header" style="padding:4px 0 12px">
-      <div class="logo" style="font-size:20px">🔐 МОИ ПАРОЛИ</div>
-      <div class="subtitle">Хранятся в браузере</div>
-    </div>
-
-    <input type="text" class="search-box" id="searchSaved" placeholder="🔍 Поиск по названию..." oninput="renderSaved()">
-
-    <div id="savedList"></div>
+  <!-- ЭКРАН ИЗБРАННОГО -->
+  <div class="content hidden" id="content-fav">
+    <div class="section-title">❤️ Избранные юзернеймы</div>
+    <div id="favResults"></div>
   </div>
 
-</div>
-
-<!-- МОДАЛКА СОХРАНЕНИЯ -->
-<div class="modal" id="saveModal" onclick="if(event.target===this)closeSaveModal()">
-  <div class="modal-content">
-    <div class="modal-title">💾 Сохранить пароль</div>
-    <div class="modal-sub">Придумай название, чтобы потом легко найти</div>
-
-    <div class="modal-pass-preview" id="modalPassPreview">—</div>
-
-    <div class="form-group">
-      <label class="form-label">Название</label>
-      <input type="text" class="form-input" id="saveName" placeholder="Например: Telegram, Почта...">
-      <div class="quick-names">
-        <span class="quick-name" onclick="setSaveName('Telegram')">Telegram</span>
-        <span class="quick-name" onclick="setSaveName('ВКонтакте')">ВКонтакте</span>
-        <span class="quick-name" onclick="setSaveName('Госуслуги')">Госуслуги</span>
-        <span class="quick-name" onclick="setSaveName('Почта')">Почта</span>
-        <span class="quick-name" onclick="setSaveName('Банк')">Банк</span>
-        <span class="quick-name" onclick="setSaveName('Instagram')">Instagram</span>
-      </div>
-    </div>
-
-    <button class="btn" onclick="savePassword()">СОХРАНИТЬ</button>
-    <button class="btn cancel" onclick="closeSaveModal()">ОТМЕНА</button>
-  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ============================================================
-// ГЕНЕРАТОР ПАРОЛЕЙ с сохранением
+// ГЕНЕРАТОР ЮЗЕРНЕЙМОВ
 // ============================================================
 
-const CHARS = {
-  lower: "abcdefghijklmnopqrstuvwxyz",
-  upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  digits: "0123456789",
-  symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
+const STYLES = {
+  premium: {
+    name: "Премиум",
+    emoji: "💎",
+    desc: "vip, gold, luxury",
+    words: ["vip","gold","luxury","premium","royal","elite","king","queen","boss","lord","duke","boss","rich","money","diamond","crown","empire","luxe","noble","regal"],
+    prefixes: ["the_","mr_","_","x_","official_"],
+    suffixes: ["_off","_vip","_pro","_king","_royal","_x","_official","_boss","_gold"],
+    useDigits: true,
+    digits: ["777","888","100","99","x","1"]
+  },
+  aesthetic: {
+    name: "Эстетика",
+    emoji: "🌸",
+    desc: "soft, moon, dream",
+    words: ["moon","star","dream","soft","angel","cloud","rose","pink","soul","light","aurora","sunset","dawn","veil","luna","astra","aura","bloom","mist","sky"],
+    prefixes: ["_","x_","its_","the_","a_"],
+    suffixes: ["_","xx","_x","_core","_vibes","_aesthetic","_love","_soft"],
+    useDigits: false,
+    digits: []
+  },
+  gamer: {
+    name: "Геймер",
+    emoji: "🎮",
+    desc: "pro, killer, xx",
+    words: ["pro","killer","sniper","ghost","ninja","shadow","hunter","beast","doom","venom","dragon","wolf","hawk","viper","reaper","storm","blade","phantom","cyber","warrior"],
+    prefixes: ["xx_","_","pro_","mr_","the_"],
+    suffixes: ["_xx","_pro","_gg","_yt","_kill","_666","_xd","_op","_1tap","_aces"],
+    useDigits: true,
+    digits: ["666","777","228","999","13","007"]
+  },
+  crypto: {
+    name: "Крипто",
+    emoji: "💰",
+    desc: "trader, invest, btc",
+    words: ["crypto","trader","invest","btc","eth","block","coin","chain","bit","satoshi","nft","defi","wallet","token","hodl","bull","pump","moon","rich","earn"],
+    prefixes: ["_","mr_","pro_","the_"],
+    suffixes: ["_btc","_eth","_pro","_trader","_hodl","_crypto","_invest","_money"],
+    useDigits: true,
+    digits: ["777","100x","21","1000","88","999"]
+  },
+  short: {
+    name: "Короткие",
+    emoji: "⚡",
+    desc: "3-4 буквы",
+    words: ["zen","pro","max","neo","ace","top","one","red","fox","sky","sun","ice","art","key","god","raw","win","x","vip","lux"],
+    prefixes: [""],
+    suffixes: [""],
+    useDigits: false,
+    digits: []
+  },
+  cute: {
+    name: "Милые",
+    emoji: "🐱",
+    desc: "kitty, bunny, honey",
+    words: ["kitty","bunny","honey","cutie","baby","kiss","love","hug","sunny","peach","cherry","muffin","cupcake","smile","happy","angel","fairy","flower","sweet","candy"],
+    prefixes: ["_","its_","little_","baby_"],
+    suffixes: ["_","_chan","_love","_cat","_honey","_kiss","_bunny"],
+    useDigits: false,
+    digits: []
+  },
+  boss: {
+    name: "Дерзкие",
+    emoji: "🔥",
+    desc: "boss, legend, gang",
+    words: ["boss","legend","gang","thug","king","capo","mafia","shot","dope","flex","beast","wild","savage","ruler","chief","sigma","alpha","topg","goat"],
+    prefixes: ["_","mr_","the_"],
+    suffixes: ["_boss","_legend","_gang","_666","_xl","_official","_topg","_goat"],
+    useDigits: true,
+    digits: ["666","888","1","7","9"]
+  },
+  mystery: {
+    name: "Загадка",
+    emoji: "🌙",
+    desc: "hidden, secret, ghost",
+    words: ["hidden","secret","ghost","shadow","unknown","veil","mystic","silent","void","dark","night","raven","wolf","phantom","lost","wander","echo","whisper","rune","arcane"],
+    prefixes: ["_","mr_","the_","x_"],
+    suffixes: ["_","_x","_ghost","_dark","_void","_silent","_hidden"],
+    useDigits: false,
+    digits: []
+  },
 };
 
-const SIMILAR = "l1IO0oOoIl1";
-const SAVED_KEY = "saved_passwords_v1";
+const LENGTHS = [
+  { id: "any", name: "Любая", min: 0, max: 100 },
+  { id: "s", name: "3-5", min: 3, max: 5 },
+  { id: "m", name: "6-9", min: 6, max: 9 },
+  { id: "l", name: "10-15", min: 10, max: 15 },
+];
 
-let currentPassword = "";
-let savedPasswords = JSON.parse(localStorage.getItem(SAVED_KEY) || "[]");
-let currentTab = "gen";
-let expandedId = null;
+const FAV_KEY = "usernames_fav_v1";
 
-// ============================================================
-// ТАБЫ
-// ============================================================
-function setTab(t) {
-  currentTab = t;
-  document.getElementById('tabGen').classList.toggle('active', t === 'gen');
-  document.getElementById('tabSaved').classList.toggle('active', t === 'saved');
-  document.getElementById('content-gen').classList.toggle('hidden', t !== 'gen');
-  document.getElementById('content-saved').classList.toggle('hidden', t !== 'saved');
-  if (t === 'saved') renderSaved();
-}
-
-function updateSavedCount() {
-  document.getElementById('savedCount').textContent = savedPasswords.length;
-}
+let state = {
+  style: "premium",
+  length: "any",
+  results: [],
+  favorites: JSON.parse(localStorage.getItem(FAV_KEY) || "[]"),
+  tab: "gen",
+};
 
 // ============================================================
 // ГЕНЕРАЦИЯ
 // ============================================================
-function generatePassword() {
-  const length = parseInt(document.getElementById('lengthSlider').value);
-  const optLower = document.getElementById('optLower').checked;
-  const optUpper = document.getElementById('optUpper').checked;
-  const optDigits = document.getElementById('optDigits').checked;
-  const optSymbols = document.getElementById('optSymbols').checked;
-  const optNoSimilar = document.getElementById('optNoSimilar').checked;
+function randomOf(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
-  let pool = "";
-  if (optLower) pool += CHARS.lower;
-  if (optUpper) pool += CHARS.upper;
-  if (optDigits) pool += CHARS.digits;
-  if (optSymbols) pool += CHARS.symbols;
+function generate() {
+  const style = STYLES[state.style];
+  const lenFilter = LENGTHS.find(l => l.id === state.length);
+  const results = [];
+  const seen = new Set();
+  let attempts = 0;
+  const targetCount = 100;
+  const maxAttempts = 3000;
 
-  if (pool.length === 0) {
-    pool = CHARS.lower + CHARS.upper;
-    document.getElementById('optLower').checked = true;
-    document.getElementById('optUpper').checked = true;
-  }
+  while (results.length < targetCount && attempts < maxAttempts) {
+    attempts++;
 
-  if (optNoSimilar) {
-    pool = pool.split('').filter(c => !SIMILAR.includes(c)).join('');
-    if (pool.length === 0) pool = "abcdefghijklmnopqrstuvwxyz";
-  }
+    const word = randomOf(style.words);
+    const usePrefix = Math.random() < 0.5;
+    const useSuffix = Math.random() < 0.6;
+    const useDigit = style.useDigits && style.digits.length > 0 && Math.random() < 0.35;
 
-  let password = "";
-  const poolLength = pool.length;
+    let name = "";
+    if (usePrefix && style.prefixes.length) name += randomOf(style.prefixes);
+    name += word;
+    if (useSuffix && style.suffixes.length) name += randomOf(style.suffixes);
+    if (useDigit) name += randomOf(style.digits);
 
-  if (window.crypto && window.crypto.getRandomValues) {
-    const randomValues = new Uint32Array(length);
-    window.crypto.getRandomValues(randomValues);
-    for (let i = 0; i < length; i++) {
-      password += pool[randomValues[i] % poolLength];
+    // Убрать лишние символы
+    name = name.replace(/^[_\.]+|[_\.]+$/g, '').replace(/__+/g, '_').replace(/\.\.+/g, '.');
+    
+    if (!name) continue;
+    if (name.length < 3) continue;
+
+    // Проверка длины
+    if (state.length !== "any") {
+      if (name.length < lenFilter.min || name.length > lenFilter.max) continue;
     }
+
+    // Уникальность
+    if (seen.has(name)) continue;
+    seen.add(name);
+
+    results.push(name);
+  }
+
+  state.results = results;
+  renderResults();
+
+  if (results.length === 0) {
+    showToast('😔 Ничего не подобралось — попробуй другой стиль/длину');
   } else {
-    for (let i = 0; i < length; i++) {
-      password += pool[Math.floor(Math.random() * poolLength)];
-    }
+    showToast('✨ Сгенерировано: ' + results.length);
   }
-
-  password = ensureTypes(password, length, optLower, optUpper, optDigits, optSymbols, optNoSimilar);
-
-  currentPassword = password;
-  displayPassword(password);
-  updateStrength(password);
-  showToast('🎲 Пароль создан');
-}
-
-function ensureTypes(pwd, length, optLower, optUpper, optDigits, optSymbols, optNoSimilar) {
-  if (length < 4) return pwd;
-  let chars = pwd.split('');
-
-  let lowerPool = CHARS.lower, upperPool = CHARS.upper, digitsPool = CHARS.digits, symbolsPool = CHARS.symbols;
-  if (optNoSimilar) {
-    lowerPool = lowerPool.split('').filter(c => !SIMILAR.includes(c)).join('');
-    upperPool = upperPool.split('').filter(c => !SIMILAR.includes(c)).join('');
-    digitsPool = digitsPool.split('').filter(c => !SIMILAR.includes(c)).join('');
-    symbolsPool = symbolsPool.split('').filter(c => !SIMILAR.includes(c)).join('');
-  }
-
-  function randChar(pool) {
-    if (!pool) return null;
-    if (window.crypto && window.crypto.getRandomValues) {
-      const v = new Uint32Array(1);
-      window.crypto.getRandomValues(v);
-      return pool[v[0] % pool.length];
-    }
-    return pool[Math.floor(Math.random() * pool.length)];
-  }
-
-  if (optLower) { const c = randChar(lowerPool); if (c) chars[Math.floor(Math.random() * length)] = c; }
-  if (optUpper) { const c = randChar(upperPool); if (c) chars[Math.floor(Math.random() * length)] = c; }
-  if (optDigits) { const c = randChar(digitsPool); if (c) chars[Math.floor(Math.random() * length)] = c; }
-  if (optSymbols) { const c = randChar(symbolsPool); if (c) chars[Math.floor(Math.random() * length)] = c; }
-
-  for (let i = chars.length - 1; i > 0; i--) {
-    let j;
-    if (window.crypto && window.crypto.getRandomValues) {
-      const v = new Uint32Array(1);
-      window.crypto.getRandomValues(v);
-      j = v[0] % (i + 1);
-    } else j = Math.floor(Math.random() * (i + 1));
-    [chars[i], chars[j]] = [chars[j], chars[i]];
-  }
-
-  return chars.join('');
-}
-
-function displayPassword(pwd) {
-  const el = document.getElementById('password');
-  el.textContent = pwd;
-  el.classList.remove('empty');
-  el.classList.remove('animate');
-  void el.offsetWidth;
-  el.classList.add('animate');
 }
 
 // ============================================================
-// НАДЁЖНОСТЬ
+// РЕНДЕР
 // ============================================================
-function updateStrength(pwd) {
-  const fill = document.getElementById('strengthFill');
-  const text = document.getElementById('strengthText');
-  fill.className = 'strength-fill';
+function renderStyles() {
+  const el = document.getElementById('stylesGrid');
+  el.innerHTML = Object.entries(STYLES).map(([key, s]) =>
+    `<div class="style-btn ${state.style === key ? 'active' : ''}" onclick="setStyle('${key}')">
+      <div class="style-emoji">${s.emoji}</div>
+      <div class="style-name">${s.name}</div>
+      <div class="style-desc">${s.desc}</div>
+    </div>`
+  ).join('');
+}
 
-  if (!pwd) { fill.style.width = '0%'; text.textContent = '—'; return; }
+function renderLengths() {
+  const el = document.getElementById('lengthRow');
+  el.innerHTML = LENGTHS.map(l =>
+    `<button class="length-btn ${state.length === l.id ? 'active' : ''}" onclick="setLength('${l.id}')">${l.name}</button>`
+  ).join('');
+}
 
-  let score = 0;
-  if (pwd.length >= 8) score++;
-  if (pwd.length >= 12) score++;
-  if (pwd.length >= 16) score++;
-  if (pwd.length >= 24) score++;
+function renderResults() {
+  const el = document.getElementById('results');
+  if (!state.results.length) {
+    el.innerHTML = `
+      <div class="empty">
+        <div class="big">🎲</div>
+        <h3>Нажми «Сгенерировать»</h3>
+        <p>Появятся красивые варианты юзернеймов</p>
+      </div>`;
+    return;
+  }
 
-  const variety = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].filter(r => r.test(pwd)).length;
-  score += variety - 1;
+  const html = `
+    <div class="results-info">Найдено: <b>${state.results.length}</b> вариантов · тапни ❤️ чтобы сохранить</div>
+    ${state.results.map(name => {
+      const isFav = state.favorites.includes(name);
+      return `
+        <div class="username-card ${isFav ? 'fav' : ''}">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+            <div class="username-text"><span class="at">@</span>${escapeHtml(name)}</div>
+            <div class="username-length">${name.length} симв.</div>
+          </div>
+          <div class="username-actions">
+            <button class="us-btn" onclick="event.stopPropagation();copyName('${escapeAttr(name)}', this)" title="Копировать">📋</button>
+            <button class="us-btn ${isFav ? 'fav-active' : ''}" onclick="event.stopPropagation();toggleFav('${escapeAttr(name)}')" title="Избранное">${isFav ? '❤️' : '🤍'}</button>
+            <a class="us-btn" href="https://t.me/username_bot" target="_blank" onclick="event.stopPropagation()" title="Проверить в Telegram">✅</a>
+          </div>
+        </div>
+      `;
+    }).join('')}
+  `;
+  el.innerHTML = html;
+}
 
-  let level, width, label;
-  if (score <= 2) { level = 'weak'; width = 25; label = 'Слабый'; }
-  else if (score <= 4) { level = 'mid'; width = 50; label = 'Средний'; }
-  else if (score <= 6) { level = 'good'; width = 75; label = 'Хороший'; }
-  else { level = 'strong'; width = 100; label = 'Очень надёжный'; }
+function renderFav() {
+  const el = document.getElementById('favResults');
+  if (!state.favorites.length) {
+    el.innerHTML = `
+      <div class="empty">
+        <div class="big">❤️</div>
+        <h3>Избранных пока нет</h3>
+        <p>Тапни на ❤️ рядом с юзернеймом, чтобы сохранить</p>
+      </div>`;
+    return;
+  }
 
-  fill.classList.add(level);
-  fill.style.width = width + '%';
-  text.textContent = label;
-  text.style.color = level === 'weak' ? '#f85149' : level === 'mid' ? '#f0b429' : level === 'good' ? '#3fb950' : '#79c0ff';
+  el.innerHTML = state.favorites.map(name => `
+    <div class="username-card fav">
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+        <div class="username-text"><span class="at">@</span>${escapeHtml(name)}</div>
+        <div class="username-length">${name.length} симв.</div>
+      </div>
+      <div class="username-actions">
+        <button class="us-btn" onclick="copyName('${escapeAttr(name)}', this)">📋</button>
+        <button class="us-btn fav-active" onclick="toggleFav('${escapeAttr(name)}')">❤️</button>
+        <a class="us-btn" href="https://t.me/username_bot" target="_blank">✅</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escapeAttr(s) {
+  return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
 }
 
 // ============================================================
-// КОПИРОВАНИЕ
+// ДЕЙСТВИЯ
 // ============================================================
-async function copyPassword() {
-  if (!currentPassword) { showToast('❌ Сначала создай пароль'); return; }
-  await copyToClipboard(currentPassword);
-  const btn = document.getElementById('copyBtn');
-  btn.classList.add('copy-success');
-  btn.innerHTML = '✅ Скопировано';
-  setTimeout(() => { btn.classList.remove('copy-success'); btn.innerHTML = '📋 Копировать'; }, 1500);
+function setStyle(s) {
+  state.style = s;
+  renderStyles();
+  generate();
 }
 
-async function copyToClipboard(text) {
+function setLength(l) {
+  state.length = l;
+  renderLengths();
+}
+
+function setTab(t) {
+  state.tab = t;
+  document.getElementById('tabGen').classList.toggle('active', t === 'gen');
+  document.getElementById('tabFav').classList.toggle('active', t === 'fav');
+  document.getElementById('content-gen').classList.toggle('hidden', t !== 'gen');
+  document.getElementById('content-fav').classList.toggle('hidden', t !== 'fav');
+  if (t === 'fav') renderFav();
+}
+
+async function copyName(name, btn) {
   try {
-    await navigator.clipboard.writeText(text);
-    showToast('📋 Скопировано!');
+    await navigator.clipboard.writeText('@' + name);
+    showToast('📋 Скопировано: @' + name);
+    if (btn) {
+      btn.classList.add('copied');
+      btn.textContent = '✓';
+      setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋'; }, 1200);
+    }
     if (navigator.vibrate) navigator.vibrate(20);
   } catch (e) {
     const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
+    ta.value = '@' + name;
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); showToast('📋 Скопировано!'); }
+    try { document.execCommand('copy'); showToast('📋 Скопировано'); }
     catch (err) { showToast('❌ Не удалось'); }
     document.body.removeChild(ta);
   }
 }
 
-// ============================================================
-// СОХРАНЕНИЕ
-// ============================================================
-function openSaveModal() {
-  if (!currentPassword) { showToast('❌ Сначала создай пароль'); return; }
-  document.getElementById('modalPassPreview').textContent = currentPassword;
-  document.getElementById('saveName').value = "";
-  document.getElementById('saveModal').classList.add('show');
-  setTimeout(() => document.getElementById('saveName').focus(), 300);
-}
-
-function closeSaveModal() {
-  document.getElementById('saveModal').classList.remove('show');
-}
-
-function setSaveName(n) {
-  document.getElementById('saveName').value = n;
-}
-
-function savePassword() {
-  const name = document.getElementById('saveName').value.trim();
-  if (!name) { showToast('❌ Введи название'); return; }
-  if (!currentPassword) { showToast('❌ Пароль пустой'); return; }
-
-  const entry = {
-    id: Date.now(),
-    name,
-    password: currentPassword,
-    date: new Date().toISOString(),
-  };
-
-  savedPasswords.unshift(entry);
-  localStorage.setItem(SAVED_KEY, JSON.stringify(savedPasswords));
-  updateSavedCount();
-  closeSaveModal();
-  showToast('💾 Сохранено: ' + name);
-  if (navigator.vibrate) navigator.vibrate(30);
-}
-
-// ============================================================
-// РЕНДЕР СОХРАНЁННЫХ
-// ============================================================
-function renderSaved() {
-  const el = document.getElementById('savedList');
-  const query = (document.getElementById('searchSaved').value || '').toLowerCase().trim();
-
-  let list = savedPasswords;
-  if (query) list = list.filter(p => p.name.toLowerCase().includes(query));
-
-  if (list.length === 0) {
-    el.innerHTML = `
-      <div class="empty-saved">
-        <div class="big">🔐</div>
-        <h3>${query ? 'Ничего не найдено' : 'Нет сохранённых паролей'}</h3>
-        <p>${query ? 'Попробуй другой запрос' : 'Создай пароль и нажми «Сохранить»'}</p>
-      </div>
-    `;
-    return;
+function toggleFav(name) {
+  const idx = state.favorites.indexOf(name);
+  if (idx > -1) {
+    state.favorites.splice(idx, 1);
+    showToast('💔 Убрано из избранного');
+  } else {
+    state.favorites.push(name);
+    showToast('❤️ Добавлено в избранное');
   }
-
-  let html = '';
-  list.forEach(p => {
-    const isExpanded = expandedId === p.id;
-    const date = new Date(p.date);
-    const dateStr = `${date.getDate()}.${(date.getMonth()+1).toString().padStart(2,'0')}.${date.getFullYear()}`;
-    html += `
-      <div class="saved-item ${isExpanded ? 'expanded' : ''}">
-        <div class="saved-header" onclick="toggleExpand(${p.id})">
-          <div class="saved-name">🔐 ${escapeHtml(p.name)}</div>
-          <div class="saved-date">${dateStr}</div>
-        </div>
-        ${isExpanded ? `
-          <div class="saved-pass">${isExpanded ? escapeHtml(p.password) : '<span class="hidden-pass">••••••••••••</span>'}</div>
-          <div class="saved-actions">
-            <button class="saved-btn" onclick="event.stopPropagation();copySaved(${p.id})">📋 Копировать</button>
-            <button class="saved-btn" onclick="event.stopPropagation();toggleExpand(${p.id})">${isExpanded ? '🙈 Скрыть' : '👁 Показать'}</button>
-            <button class="saved-btn danger" onclick="event.stopPropagation();deleteSaved(${p.id})">🗑</button>
-          </div>
-        ` : ''}
-      </div>
-    `;
-  });
-  el.innerHTML = html;
-}
-
-function toggleExpand(id) {
-  expandedId = expandedId === id ? null : id;
-  renderSaved();
-}
-
-function copySaved(id) {
-  const p = savedPasswords.find(x => x.id === id);
-  if (!p) return;
-  copyToClipboard(p.password);
-}
-
-function deleteSaved(id) {
-  const p = savedPasswords.find(x => x.id === id);
-  if (!p) return;
-  if (!confirm(`Удалить пароль для «${p.name}»?`)) return;
-  savedPasswords = savedPasswords.filter(x => x.id !== id);
-  localStorage.setItem(SAVED_KEY, JSON.stringify(savedPasswords));
-  if (expandedId === id) expandedId = null;
-  updateSavedCount();
-  renderSaved();
-  showToast('🗑 Удалено');
-}
-
-function escapeHtml(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-// ============================================================
-// ДЛИНА
-// ============================================================
-function updateLength() {
-  const v = document.getElementById('lengthSlider').value;
-  document.getElementById('lengthDisplay').textContent = v;
-  generatePassword();
+  localStorage.setItem(FAV_KEY, JSON.stringify(state.favorites));
+  renderResults();
+  if (state.tab === 'fav') renderFav();
 }
 
 // ============================================================
@@ -590,17 +440,18 @@ function showToast(text) {
   t.textContent = text;
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 1500);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
 }
 
 // ============================================================
 // ИНИЦИАЛИЗАЦИЯ
 // ============================================================
 function init() {
-  updateSavedCount();
-  generatePassword();
+  renderStyles();
+  renderLengths();
+  generate();
 }
 init();
 </script>
 </body>
-            </html>
+</html>
