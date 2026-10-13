@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>КИНО — Каталог фильмов</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{height:100%;overflow:hidden;background:#0a0e14;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;color:#e6edf3}
+
+.app{position:relative;width:100vw;height:100vh;max-width:480px;margin:0 auto;background:#0a0e14;display:flex;flex-direction:column;overflow:hidden}
+
+/* ШАПКА */
+.header{background:linear-gradient(180deg,#1a1f2e,#0d1117);border-bottom:1px solid #21262d;padding:12px 14px;flex-shrink:0;position:relative;z-index:10}
+.logo{font-size:22px;font-weight:900;background:linear-gradient(135deg,#f0b429,#ff6b6b,#f0b429);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shine 3s infinite;letter-spacing:2px;text-align:center;margin-bottom:10px}
+@keyframes shine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+
+.search-row{display:flex;gap:6px;margin-bottom:10px}
+.search{flex:1;background:#161b22;border:2px solid #30363d;border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;font-family:inherit;transition:.2s}
+.search:focus{outline:none;border-color:#f0b429;background:#1c2333}
+.search::placeholder{color:#6a737d}
+.fav-btn{background:#161b22;border:2px solid #30363d;border-radius:10px;padding:10px 12px;color:#fff;font-size:16px;cursor:pointer;transition:.2s;flex-shrink:0}
+.fav-btn:active{transform:scale(.95);background:#1c2333}
+.fav-btn.active{border-color:#ff6b6b;background:#2a1a1f;color:#ff6b6b}
+
+.genres{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.genres::-webkit-scrollbar{display:none}
+.genre{flex-shrink:0;background:#161b22;border:2px solid #30363d;border-radius:16px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;color:#c9d1d9;white-space:nowrap}
+.genre:active{transform:scale(.95)}
+.genre.active{background:linear-gradient(180deg,#f0b429,#b8860b);border-color:#ffd866;color:#000}
+
+/* СПИСОК */
+.content{flex:1;overflow-y:auto;padding:12px;scrollbar-width:thin}
+.content::-webkit-scrollbar{width:4px}
+.content::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px}
+.content::-webkit-scrollbar-track{background:transparent}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.movie-card{background:linear-gradient(135deg,#161b22,#1c2333);border:1px solid #30363d;border-radius:12px;overflow:hidden;cursor:pointer;transition:.15s;position:relative}
+.movie-card:active{transform:scale(.97)}
+.movie-poster{width:100%;aspect-ratio:2/3;background-size:cover;background-position:center;position:relative;display:flex;align-items:center;justify-content:center;font-size:60px}
+.movie-poster::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.9))}
+.movie-rating{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.85);border:1px solid #f0b429;color:#f0b429;font-size:11px;font-weight:900;padding:3px 7px;border-radius:6px;z-index:2}
+.movie-rating.good{border-color:#3fb950;color:#3fb950}
+.movie-rating.mid{border-color:#f0b429;color:#f0b429}
+.movie-rating.bad{border-color:#f85149;color:#f85149}
+.movie-fav{position:absolute;top:8px;left:8px;font-size:18px;z-index:2;filter:drop-shadow(0 2px 4px rgba(0,0,0,.8));transition:.2s}
+.movie-fav.active{animation:heartBeat .3s}
+@keyframes heartBeat{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.movie-info{padding:8px;position:relative;z-index:1}
+.movie-title{font-size:13px;font-weight:800;line-height:1.3;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.movie-meta{font-size:10px;color:#8b949e;display:flex;justify-content:space-between;gap:4px}
+.stars{color:#f0b429;font-size:10px;letter-spacing:1px}
+
+/* ПУСТО */
+.empty{text-align:center;padding:60px 20px;color:#6a737d}
+.empty .big{font-size:60px;margin-bottom:14px;opacity:.5}
+.empty h3{font-size:16px;margin-bottom:6px;color:#c9d1d9}
+.empty p{font-size:12px;line-height:1.5}
+
+/* МОДАЛКА */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;display:none;overflow-y:auto;backdrop-filter:blur(8px);animation:fadeIn .25s}
+.modal.show{display:block}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.modal-content{max-width:480px;margin:0 auto;background:#0d1117;min-height:100vh;position:relative;animation:slideUp .3s}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.modal-hero{position:relative;height:340px;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;align-items:center}
+.modal-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,transparent 30%,transparent 50%,rgba(13,17,23,.95) 100%)}
+.modal-hero-emoji{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:120px;opacity:.5;z-index:1}
+.modal-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:18px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.modal-close:active{transform:scale(.9)}
+.modal-fav{position:absolute;top:14px;left:14px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:18px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.modal-fav:active{transform:scale(.9)}
+.modal-fav.active{background:rgba(255,107,107,.9);border-color:#ff6b6b}
+
+.modal-info{position:relative;z-index:2;text-align:left;width:100%}
+.modal-title{font-size:24px;font-weight:900;line-height:1.15;margin-bottom:6px;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.modal-sub{font-size:12px;color:#c9d1d9;margin-bottom:8px;display:flex;gap:10px;flex-wrap:wrap}
+.modal-rating-big{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.7);border:2px solid #f0b429;border-radius:20px;padding:4px 12px;font-size:13px;font-weight:900;color:#f0b429;margin-top:6px}
+
+.modal-body{padding:16px}
+.modal-section{margin-bottom:20px}
+.modal-section h4{font-size:12px;color:#f0b429;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;font-weight:800}
+.modal-section p{font-size:14px;line-height:1.6;color:#c9d1d9}
+.actors{display:flex;flex-wrap:wrap;gap:6px}
+.actor{background:#1c2333;border:1px solid #30363d;border-radius:14px;padding:4px 12px;font-size:12px;color:#e6edf3}
+
+.watch-btn{width:100%;background:linear-gradient(180deg,#ff0000,#b30000);border:none;color:#fff;padding:16px;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:1px;box-shadow:0 6px 20px rgba(255,0,0,.4);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;text-decoration:none}
+.watch-btn:active{transform:scale(.97)}
+
+/* TOAST */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#161b22;border:1px solid #f0b429;color:#f0b429;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;transition:.3s;z-index:200;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+.counter{text-align:center;font-size:11px;color:#6a737d;padding:8px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="logo">🎬 КИНО</div>
+    <div class="search-row">
+      <input type="text" class="search" id="search" placeholder="🔍 Поиск фильма...">
+      <button class="fav-btn" id="favBtn" onclick="toggleFavView()">❤️</button>
+    </div>
+    <div class="genres" id="genres"></div>
+  </div>
+
+  <div class="content" id="content">
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="counter" id="counter"></div>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content" id="modalContent"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// КИНОСАЙТ — каталог фильмов
+// ============================================================
+
+const MOVIES = [
+  { id: 1, title: "Дюна: Часть вторая", year: 2024, genre: "Фантастика", rating: 8.5, duration: "2ч 46м", age: "16+", poster: "linear-gradient(135deg,#d4a373,#8b4513,#2c1810)", emoji: "🏜️",
+    desc: "Пол Атрейдес объединяется с фременами, чтобы отомстить заговорщикам, уничтожившим его семью. Он пытается предотвратить ужасное будущее, которое может поглотить всю вселенную.",
+    actors: ["Тимоти Шаламе","Зендея","Ребекка Фергюсон","Хавьер Бардем","Остин Батлер"],
+    trailer: "https://www.youtube.com/results?search_query=дюна+часть+вторая+трейлер" },
+  { id: 2, title: "Оппенгеймер", year: 2023, genre: "Драма", rating: 8.4, duration: "3ч 0м", age: "18+", poster: "linear-gradient(135deg,#f0b429,#b8860b,#4a3000)", emoji: "⚛️",
+    desc: "История американского учёного Роберта Оппенгеймера, который руководил разработкой атомной бомбы в рамках Манхэттенского проекта во время Второй мировой войны.",
+    actors: ["Киллиан Мёрфи","Эмили Блант","Роберт Дауни мл.","Мэтт Дэймон","Флоренс Пью"],
+    trailer: "https://www.youtube.com/results?search_query=оппенгеймер+трейлер" },
+  { id: 3, title: "Барби", year: 2023, genre: "Комедия", rating: 7.0, duration: "1ч 54м", age: "12+", poster: "linear-gradient(135deg,#ff69b4,#ff1493,#8b0060)", emoji: "💖",
+    desc: "Барби отправляется в реальный мир и обнаруживает, что жизнь там не такая идеальная, как в Барбиленде. Весёлая комедия о поиске себя.",
+    actors: ["Марго Роби","Райан Гослинг","Америка Феррера","Кейт Маккиннон"],
+    trailer: "https://www.youtube.com/results?search_query=барби+трейлер" },
+  { id: 4, title: "Джон Уик 4", year: 2023, genre: "Боевик", rating: 7.8, duration: "2ч 49м", age: "18+", poster: "linear-gradient(135deg,#1a1a1a,#4a0000,#000000)", emoji: "🔫",
+    desc: "Джон Уик находит путь к свободе от Правления, но для этого ему нужно сразиться с могущественным врагом. Финальная схватка легендарного киллера.",
+    actors: ["Киану Ривз","Донни Йен","Билл Скарсгард","Лоренс Фишбёрн","Иэн Макшейн"],
+    trailer: "https://www.youtube.com/results?search_query=джон+уик+4+трейлер" },
+  { id: 5, title: "Человек-паук: Паутина вселенных", year: 2023, genre: "Мультфильм", rating: 8.6, duration: "2ч 20м", age: "6+", poster: "linear-gradient(135deg,#ff006e,#8338ec,#3a86ff)", emoji: "🕷️",
+    desc: "Майлз Моралес отправляется в мультивселенную, где встречает команду Пауков со всех миров. Потрясающая анимация и невероятные приключения.",
+    actors: ["Шамеик Мур","Хейли Стайнфелд","Оскар Айзек","Джейк Джонсон"],
+    trailer: "https://www.youtube.com/results?search_query=человек+паук+паутина+вселенных+трейлер" },
+  { id: 6, title: "Форсаж 10", year: 2023, genre: "Боевик", rating: 5.8, duration: "2ч 21м", age: "12+", poster: "linear-gradient(135deg,#f0b429,#ff6b00,#4a0000)", emoji: "🏎️",
+    desc: "Доминик Торетто и его команда сталкиваются с новым опасным врагом — сыном старого противника, который хочет отомстить за смерть отца.",
+    actors: ["Вин Дизель","Джейсон Момоа","Мишель Родригес","Джон Сина","Шарлиз Терон"],
+    trailer: "https://www.youtube.com/results?search_query=форсаж+10+трейлер" },
+  { id: 7, title: "Вонка", year: 2023, genre: "Мультфильм", rating: 6.9, duration: "1ч 56м", age: "6+", poster: "linear-gradient(135deg,#a855f7,#7c3aed,#4c1d95)", emoji: "🍫",
+    desc: "История о молодом Вилли Вонке и том, как он стал величайшим изобретателем шоколада в мире. Волшебное приключение для всей семьи.",
+    actors: ["Тимоти Шаламе","Оливия Колман","Хью Грант","Роуэн Аткинсон"],
+    trailer: "https://www.youtube.com/results?search_query=вонка+трейлер" },
+  { id: 8, title: "Стражи Галактики 3", year: 2023, genre: "Фантастика", rating: 7.9, duration: "2ч 30м", age: "12+", poster: "linear-gradient(135deg,#06b6d4,#0891b2,#164e63)", emoji: "🚀",
+    desc: "Питер Квилл и его команда отправляются в опасное путешествие, чтобы спасти Ракету. Эмоциональная история о семье и жертвах.",
+    actors: ["Крис Пратт","Зои Салдана","Дэйв Батиста","Карен Гиллан","Пом Клементьефф"],
+    trailer: "https://www.youtube.com/results?search_query=стражи+галактики+3+трейлер" },
+  { id: 9, title: "Убийца", year: 2023, genre: "Боевик", rating: 6.7, duration: "1ч 58м", age: "18+", poster: "linear-gradient(135deg,#1a1a1a,#4a4a4a,#000000)", emoji: "🎯",
+    desc: "Профессиональный убийца совершает ошибку во время выполнения заказа в Париже и вынужден бороться за свою жизнь против бывших нанимателей.",
+    actors: ["Майкл Фассбендер","Тильда Суинтон","Чарльз Парнелл","Арлисс Ховард"],
+    trailer: "https://www.youtube.com/results?search_query=убийца+фильм+2023+трейлер" },
+  { id: 10, title: "Годзилла и Конг: Новая империя", year: 2024, genre: "Фантастика", rating: 6.5, duration: "1ч 55м", age: "12+", poster: "linear-gradient(135deg,#22c55e,#16a34a,#14532d)", emoji: "🦖",
+    desc: "Годзилла и Конг объединяются против нового мощного врага, который угрожает уничтожить Землю. Эпические битвы титанов.",
+    actors: ["Ребекка Холл","Брайан Тайри Генри","Дэн Стивенс","Кэйли Хоттл"],
+    trailer: "https://www.youtube.com/results?search_query=годзилла+и+конг+2+трейлер" },
+  { id: 11, title: "Дэдпул и Росомаха", year: 2024, genre: "Боевик", rating: 7.7, duration: "2ч 7м", age: "18+", poster: "linear-gradient(135deg,#dc2626,#fbbf24,#7f1d1d)", emoji: "🗡️",
+    desc: "Дэдпул объединяется с Росомахой в безумном приключении по мультивселенной Marvel. Много крови, юмора и фансервиса.",
+    actors: ["Райан Рейнольдс","Хью Джекман","Эмма Коррин","Морена Баккарин"],
+    trailer: "https://www.youtube.com/results?search_query=дэдпул+и+росомаха+трейлер" },
+  { id: 12, title: "Тихое место: День первый", year: 2024, genre: "Ужасы", rating: 6.8, duration: "1ч 40м", age: "18+", poster: "linear-gradient(135deg,#1e3a5f,#0f172a,#000000)", emoji: "🤫",
+    desc: "Приквел хоррора о нашествии слепых монстров с чутким слухом. История выживания в первые дни апокалипсиса в Нью-Йорке.",
+    actors: ["Лупита Нионго","Джозеф Куинн","Алекс Вулф","Джимон Хонсу"],
+    trailer: "https://www.youtube.com/results?search_query=тихое+место+день+первый+трейлер" },
+  { id: 13, title: "Мальчик и птица", year: 2023, genre: "Мультфильм", rating: 7.6, duration: "2ч 4м", age: "12+", poster: "linear-gradient(135deg,#38bdf8,#0284c7,#0c4a6e)", emoji: "🐦",
+    desc: "Волшебная история от Studio Ghibli о мальчике, который отправляется в фантастический мир, чтобы найти свою мать. Последний фильм Миядзаки.",
+    actors: ["Сома Санто","Аимён","Кэнси Ёнэдзу","Дзюн Кунимура"],
+    trailer: "https://www.youtube.com/results?search_query=мальчик+и+птица+трейлер" },
+  { id: 14, title: "Бедные-несчастные", year: 2023, genre: "Драма", rating: 7.9, duration: "2ч 21м", age: "18+", poster: "linear-gradient(135deg,#ec4899,#a855f7,#6b21a8)", emoji: "🌹",
+    desc: "Фантастическая история о Белле Бакстер — молодой женщине, оживлённой учёным. Она отправляется в путешествие по миру в поисках приключений.",
+    actors: ["Эмма Стоун","Марк Руффало","Уиллем Дефо","Рами Юссеф"],
+    trailer: "https://www.youtube.com/results?search_query=бедные+несчастные+трейлер" },
+  { id: 15, title: "Napoleon", year: 2023, genre: "Драма", rating: 6.7, duration: "2ч 38м", age: "18+", poster: "linear-gradient(135deg,#1e40af,#1e3a8a,#172554)", emoji: "⚔️",
+    desc: "История взлёта и падения Наполеона Бонапарта. Его военные кампании, политические интриги и отношения с Жозефиной.",
+    actors: ["Хоакин Феникс","Ванесса Кирби","Тахар Рахим","Руперт Эверетт"],
+    trailer: "https://www.youtube.com/results?search_query=napoleon+2023+трейлер" },
+  { id: 16, title: "Пчеловод", year: 2024, genre: "Боевик", rating: 6.4, duration: "1ч 45м", age: "18+", poster: "linear-gradient(135deg,#eab308,#a16207,#422006)", emoji: "🐝",
+    desc: "Бывший спецназовец мстит за смерть своей знакомой, втягиваясь в опасный заговор. Классический боевик с Джейсоном Стэйтемом.",
+    actors: ["Джейсон Стэйтем","Джереми Айронс","Эмми Рейвер-Лэмпман","Бобби Надери"],
+    trailer: "https://www.youtube.com/results?search_query=пчеловод+трейлер" },
+  { id: 17, title: "Каскадёр", year: 2024, genre: "Боевик", rating: 7.2, duration: "2ч 6м", age: "16+", poster: "linear-gradient(135deg,#fb923c,#ea580c,#7c2d12)", emoji: "🎬",
+    desc: "Каскадёр отправляется на поиски пропавшей кинозвезды и раскрывает заговор. Романтическая комедия с экшеном.",
+    actors: ["Райан Гослинг","Эмили Блант","Аарон Тейлор-Джонсон","Ханна Уоддингэм"],
+    trailer: "https://www.youtube.com/results?search_query=каскадёр+2024+трейлер" },
+  { id: 18, title: "Головоломка 2", year: 2024, genre: "Мультфильм", rating: 7.6, duration: "1ч 36м", age: "6+", poster: "linear-gradient(135deg,#f472b6,#a78bfa,#60a5fa)", emoji: "🧠",
+    desc: "Райли становится подростком, и в её голове появляются новые эмоции: Тревога, Зависть, Смущение и Скука. Продолжение любимого мультфильма.",
+    actors: ["Эми Полер","Майя Хоук","Кенсингтон Толлман","Тони Хейл"],
+    trailer: "https://www.youtube.com/results?search_query=головоломка+2+трейлер" },
+  { id: 19, title: "Дом у дороги", year: 2024, genre: "Боевик", rating: 6.1, duration: "2ч 1м", age: "16+", poster: "linear-gradient(135deg,#78350f,#451a03,#1c1917)", emoji: "🍺",
+    desc: "Далтон — вышибала в баре на Флорида-Кис. Он должен защитить заведение от банды, которая хочет захватить землю.",
+    actors: ["Джейк Джилленхол","Даниэла Мелшиор","Билли Магнуссен","Конор Макгрегор"],
+    trailer: "https://www.youtube.com/results?search_query=дом+у+дороги+2024+трейлер" },
+  { id: 20, title: "Кунг-фу Панда 4", year: 2024, genre: "Мультфильм", rating: 6.3, duration: "1ч 34м", age: "6+", poster: "linear-gradient(135deg,#fbbf24,#f59e0b,#78350f)", emoji: "🐼",
+    desc: "По становится духовным лидером Долины Мира и должен найти нового Драконьего воина. Новые приключения любимого панды.",
+    actors: ["Джек Блэк","Аквафина","Виола Дэвис","Дастин Хоффман"],
+    trailer: "https://www.youtube.com/results?search_query=кунг+фу+панда+4+трейлер" },
+];
+
+const GENRES = ["Все", "Боевик", "Комедия", "Драма", "Ужасы", "Фантастика", "Мультфильм"];
+
+let state = {
+  genre: "Все",
+  search: "",
+  favorites: JSON.parse(localStorage.getItem("kino_favs") || "[]"),
+  showFavsOnly: false,
+};
+
+function renderGenres() {
+  document.getElementById('genres').innerHTML = GENRES.map(g =>
+    `<div class="genre ${state.genre === g ? 'active' : ''}" onclick="setGenre('${g}')">${g}</div>`
+  ).join('');
+}
+
+function setGenre(g) {
+  state.genre = g;
+  state.showFavsOnly = false;
+  document.getElementById('favBtn').classList.remove('active');
+  renderGenres();
+  renderMovies();
+}
+
+function toggleFavView() {
+  state.showFavsOnly = !state.showFavsOnly;
+  document.getElementById('favBtn').classList.toggle('active', state.showFavsOnly);
+  renderMovies();
+}
+
+function getRatingClass(r) {
+  if (r >= 8) return 'good';
+  if (r >= 6) return 'mid';
+  return 'bad';
+}
+
+function getStars(r) {
+  const full = Math.round(r / 2);
+  return '★'.repeat(full) + '☆'.repeat(5 - full);
+}
+
+function filterMovies() {
+  let list = MOVIES;
+  if (state.showFavsOnly) list = list.filter(m => state.favorites.includes(m.id));
+  if (state.genre !== "Все") list = list.filter(m => m.genre === state.genre);
+  if (state.search.trim()) {
+    const q = state.search.toLowerCase().trim();
+    list = list.filter(m =>
+      m.title.toLowerCase().includes(q) ||
+      m.genre.toLowerCase().includes(q) ||
+      m.year.toString().includes(q) ||
+      m.actors.some(a => a.toLowerCase().includes(q))
+    );
+  }
+  return list;
+}
+
+function renderMovies() {
+  const list = filterMovies();
+  const grid = document.getElementById('grid');
+  const counter = document.getElementById('counter');
+
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="big">🎬</div><h3>Ничего не найдено</h3><p>Попробуй другой жанр или поиск</p></div>`;
+    counter.textContent = '';
+    return;
+  }
+
+  grid.innerHTML = list.map(m => {
+    const isFav = state.favorites.includes(m.id);
+    return `
+      <div class="movie-card" onclick="openMovie(${m.id})">
+        <div class="movie-poster" style="background:${m.poster}">
+          ${m.emoji}
+          <div class="movie-rating ${getRatingClass(m.rating)}">⭐ ${m.rating}</div>
+          ${isFav ? '<div class="movie-fav active">❤️</div>' : ''}
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">${m.title}</div>
+          <div class="movie-meta"><span>${m.year} · ${m.genre}</span></div>
+          <div class="stars">${getStars(m.rating)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  counter.textContent = `Найдено: ${list.length} фильм${list.length === 1 ? '' : list.length < 5 ? 'а' : 'ов'}`;
+}
+
+function openMovie(id) {
+  const m = MOVIES.find(x => x.id === id);
+  if (!m) return;
+  const isFav = state.favorites.includes(m.id);
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-hero" style="background:${m.poster}">
+      <div class="modal-hero-emoji">${m.emoji}</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-fav ${isFav ? 'active' : ''}" onclick="toggleFav(${m.id})">${isFav ? '❤️' : '🤍'}</button>
+      <div class="modal-info">
+        <div class="modal-title">${m.title}</div>
+        <div class="modal-sub">
+          <span>📅 ${m.year}</span><span>⏱ ${m.duration}</span><span>🎭 ${m.genre}</span><span>🔞 ${m.age}</span>
+        </div>
+        <div class="modal-rating-big">⭐ ${m.rating} / 10</div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section"><h4>📖 Описание</h4><p>${m.desc}</p></div>
+      <div class="modal-section"><h4>🎭 Актёры</h4><div class="actors">${m.actors.map(a => `<span class="actor">${a}</span>`).join('')}</div></div>
+      <div class="modal-section"><a href="${m.trailer}" target="_blank" class="watch-btn">▶ Смотреть трейлер</a></div>
+    </div>
+  `;
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow = '';
+  renderMovies();
+}
+
+function toggleFav(id) {
+  const idx = state.favorites.indexOf(id);
+  if (idx > -1) { state.favorites.splice(idx, 1); showToast('💔 Убрано из избранного'); }
+  else { state.favorites.push(id); showToast('❤️ Добавлено в избранное'); }
+  localStorage.setItem("kino_favs", JSON.stringify(state.favorites));
+  openMovie(id);
+}
+
+let toastTimer = null;
+function showToast(text) {
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+document.getElementById('search').addEventListener('input', (e) => {
+  state.search = e.target.value;
+  renderMovies();
+});
+
+function init() {
+  renderGenres();
+  renderMovies();
+}
+init();
+</script>
+</body>
+  </html>
