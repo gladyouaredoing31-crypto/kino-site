@@ -2,456 +2,734 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>@ ЮЗЕРНЕЙМЫ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кафе SushiPizza «Westa» — Варна</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
-html,body{height:100%;overflow:hidden;background:#0a0e14;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;color:#e6edf3}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;overflow-x:hidden}
 
-.app{position:relative;width:100vw;height:100vh;max-width:480px;margin:0 auto;background:radial-gradient(circle at 50% 0%,#1a2545,#0a0e14 60%);display:flex;flex-direction:column;overflow:hidden}
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:30px 20px;background:linear-gradient(135deg,#2a0f0a 0%,#1a0505 50%,#000 100%);overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,#ff6b35,transparent 70%);opacity:.3;filter:blur(60px);animation:float 6s ease-in-out infinite}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,#f0b429,transparent 70%);opacity:.2;filter:blur(60px);animation:float 6s ease-in-out infinite reverse}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-30px)}}
+.hero-content{position:relative;z-index:2;max-width:1100px;margin:0 auto;width:100%}
+.logo-bar{display:flex;align-items:center;gap:12px;margin-bottom:30px}
+.logo-icon{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#ff6b35,#f0b429);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 4px 20px rgba(255,107,53,.5)}
+.logo-text{font-size:18px;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#ff6b35,#f0b429);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* ШАПКА */
-.header{padding:16px 16px 8px;text-align:center;flex-shrink:0}
-.logo{font-size:24px;font-weight:900;background:linear-gradient(135deg,#58a6ff,#a855f7,#58a6ff);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shine 3s infinite;letter-spacing:2px}
+.status-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:20px;background:rgba(63,185,80,.15);border:1px solid rgba(63,185,80,.4);color:#3fb950;font-size:12px;font-weight:800;letter-spacing:1px;margin-bottom:20px}
+.status-badge.closed{background:rgba(248,81,73,.15);border-color:rgba(248,81,73,.4);color:#f85149}
+.status-dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.hero h1{font-size:52px;font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:20px}
+.hero h1 span{background:linear-gradient(135deg,#ff6b35,#f0b429,#ff6b35);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shine 3s infinite}
 @keyframes shine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-.subtitle{font-size:10px;color:#8b949e;letter-spacing:4px;text-transform:uppercase;margin-top:4px}
+.hero p{font-size:17px;color:#c9c0b8;line-height:1.6;max-width:600px;margin-bottom:24px}
 
-/* КОНТЕНТ */
-.content{flex:1;overflow-y:auto;padding:12px 16px;scrollbar-width:thin}
-.content::-webkit-scrollbar{width:4px}
-.content::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px}
+.view-counter{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:12px;font-size:12px;color:#8b8074;margin-bottom:20px}
+.view-counter b{color:#ff6b35}
 
-/* СТИЛИ */
-.section-title{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:800;padding-left:2px}
-.styles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.style-btn{background:linear-gradient(135deg,#161b22,#1c2333);border:2px solid #30363d;border-radius:12px;padding:12px 10px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
-.style-btn:active{transform:scale(.96)}
-.style-btn.active{border-color:#58a6ff;background:linear-gradient(135deg,#1c2333,#1a2545);box-shadow:0 0 0 2px rgba(88,166,255,.3),0 0 20px rgba(88,166,255,.3)}
-.style-emoji{font-size:24px}
-.style-name{font-size:12px;font-weight:800;letter-spacing:.5px}
-.style-desc{font-size:9px;color:#8b949e;line-height:1.2}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;text-decoration:none;transition:.2s;border:none;font-family:inherit;letter-spacing:.5px}
+.btn-primary{background:linear-gradient(135deg,#ff6b35,#e8480d);color:#fff;box-shadow:0 8px 24px rgba(255,107,53,.5)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,53,.7)}
+.btn-secondary{background:rgba(255,255,255,.08);color:#fff;border:2px solid rgba(255,255,255,.15);backdrop-filter:blur(8px)}
+.btn-secondary:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
+.btn:active{transform:scale(.97)}
 
-/* ДЛИНА */
-.length-row{display:flex;gap:6px;margin-bottom:14px}
-.length-btn{flex:1;background:#161b22;border:2px solid #30363d;border-radius:10px;padding:10px 4px;color:#8b949e;font-size:12px;font-weight:800;cursor:pointer;transition:.15s}
-.length-btn:active{transform:scale(.96)}
-.length-btn.active{background:linear-gradient(180deg,#58a6ff,#1f6feb);color:#fff;border-color:#79c0ff}
+/* INFO STRIP */
+.info-strip{background:linear-gradient(90deg,#1a0505,#2a0f0a,#1a0505);border-top:1px solid rgba(255,107,53,.2);border-bottom:1px solid rgba(255,107,53,.2);padding:20px}
+.info-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.info-item{display:flex;align-items:center;gap:12px}
+.info-icon{width:44px;height:44px;border-radius:12px;background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.info-item .lbl{font-size:11px;color:#8b8074;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.info-item .val{font-size:14px;font-weight:800;margin-top:2px}
+.info-item .val a{color:#ff6b35;text-decoration:none}
 
-/* КНОПКА ГЕНЕРАЦИИ */
-.gen-btn{width:100%;background:linear-gradient(180deg,#58a6ff,#1f6feb);border:2px solid #79c0ff;color:#fff;padding:16px;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;transition:.1s;box-shadow:0 6px 20px rgba(88,166,255,.5);display:flex;align-items:center;justify-content:center;gap:8px}
-.gen-btn:active{transform:scale(.97);box-shadow:0 3px 10px rgba(88,166,255,.4)}
+/* SECTION */
+.section{padding:80px 20px}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-head{text-align:center;margin-bottom:50px}
+.section-tag{display:inline-block;background:rgba(255,107,53,.15);color:#ff6b35;padding:6px 16px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(255,107,53,.3)}
+.section-title{font-size:40px;font-weight:900;letter-spacing:-.5px;margin-bottom:12px;line-height:1.1}
+.section-desc{font-size:15px;color:#8b8074;max-width:600px;margin:0 auto;line-height:1.6}
 
-/* РЕЗУЛЬТАТЫ */
-.results-info{font-size:11px;color:#8b949e;margin-bottom:10px;text-align:center;padding:6px}
-.results-info b{color:#58a6ff}
+/* HITS */
+.hits-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+.hit{background:linear-gradient(135deg,#1a1210,#0d0a08);border:1px solid rgba(255,107,53,.3);border-radius:12px;padding:10px 18px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:8px}
+.hit .fire{color:#ff6b35}
 
-.username-card{background:linear-gradient(135deg,#161b22,#1c2333);border:2px solid #30363d;border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:.15s;cursor:pointer}
-.username-card:active{transform:scale(.98)}
-.username-card:hover{border-color:#58a6ff}
-.username-card.fav{border-color:#ff6b6b;background:linear-gradient(135deg,#1f1520,#2a1a1f)}
+/* MENU GRID */
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.menu-item{background:linear-gradient(135deg,#1a1210,#0d0a08);border:1px solid rgba(255,107,53,.15);border-radius:18px;padding:20px;transition:.3s;position:relative;overflow:hidden}
+.menu-item.hit-item{border-color:rgba(255,107,53,.5);box-shadow:0 0 20px rgba(255,107,53,.2)}
+.hit-badge{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#ff6b35,#e8480d);color:#fff;font-size:9px;font-weight:900;padding:4px 10px;border-radius:10px;letter-spacing:1px}
+.menu-item:hover{border-color:rgba(255,107,53,.4);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.menu-emoji{font-size:60px;text-align:center;margin-bottom:14px;filter:drop-shadow(0 8px 20px rgba(255,107,53,.3))}
+.menu-name{font-size:18px;font-weight:900;margin-bottom:6px;text-align:center}
+.menu-ingr{font-size:12px;color:#8b8074;line-height:1.5;text-align:center;margin-bottom:14px;min-height:38px}
+.menu-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.05);padding-top:14px}
+.menu-price{font-size:20px;font-weight:900;color:#ff6b35}
+.menu-order{background:linear-gradient(135deg,#ff6b35,#e8480d);border:none;color:#fff;padding:8px 16px;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;transition:.2s;font-family:inherit}
+.menu-order:hover{transform:scale(1.05)}
+.menu-order:active{transform:scale(.95)}
 
-.username-text{font-family:'Courier New',monospace;font-size:16px;font-weight:800;color:#79c0ff;flex:1;word-break:break-all;line-height:1.2}
-.username-text .at{color:#f0b429}
-.username-length{font-size:9px;color:#6a737d;font-weight:700;background:#0a0e14;padding:2px 6px;border-radius:6px;flex-shrink:0}
+/* КОНТАКТЫ */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+.contact-card{background:linear-gradient(135deg,#1a1210,#0d0a08);border:1px solid rgba(255,107,53,.2);border-radius:18px;padding:28px;text-align:center;cursor:pointer;transition:.2s}
+.contact-card:active{transform:scale(.98)}
+.contact-card .icon{font-size:44px;margin-bottom:14px}
+.contact-card h3{font-size:14px;color:#8b8074;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:700}
+.contact-card .value{font-size:20px;font-weight:900;color:#fff;margin-bottom:6px;word-break:break-word}
+.contact-card .value a{color:#ff6b35;text-decoration:none}
+.contact-card .sub{font-size:12px;color:#8b8074}
 
-.username-actions{display:flex;gap:4px;flex-shrink:0}
-.us-btn{background:#0a0e14;border:1px solid #30363d;color:#c9d1d9;width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:.15s}
-.us-btn:active{transform:scale(.9);background:#1c2333}
-.us-btn.copied{background:#3fb950;border-color:#7ee787;color:#fff}
-.us-btn.fav-active{background:#ff6b6b;border-color:#ff6b6b;color:#fff}
+/* ОТЗЫВЫ */
+.reviews-section{background:#0a0605}
+.rating-summary{text-align:center;margin-bottom:30px}
+.rating-big{font-size:64px;font-weight:900;background:linear-gradient(135deg,#f0b429,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.rating-stars{font-size:24px;color:#f0b429;letter-spacing:4px;margin:10px 0}
+.rating-count{font-size:13px;color:#8b8074}
 
-/* ПУСТО */
-.empty{text-align:center;padding:50px 20px;color:#6a737d}
-.empty .big{font-size:56px;margin-bottom:14px;opacity:.4}
-.empty h3{font-size:15px;margin-bottom:6px;color:#c9d1d9}
-.empty p{font-size:12px;line-height:1.5}
+.review-form{background:linear-gradient(135deg,#1a1210,#0d0a08);border:2px solid rgba(255,107,53,.3);border-radius:18px;padding:24px;max-width:600px;margin:0 auto 30px}
+.form-title{font-size:18px;font-weight:900;margin-bottom:16px;text-align:center;color:#ff6b35}
+.form-group{margin-bottom:14px}
+.form-label{font-size:12px;color:#8b8074;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block;font-weight:800}
+.form-input,.form-textarea{width:100%;background:#0d0a08;border:2px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;color:#fff;font-size:14px;font-family:inherit;transition:.2s}
+.form-input:focus,.form-textarea:focus{outline:none;border-color:#ff6b35}
+.form-textarea{min-height:100px;resize:vertical}
+.form-input::placeholder,.form-textarea::placeholder{color:#5a5048}
 
-/* ТАБЫ */
-.tabs{display:flex;gap:4px;background:#161b22;padding:6px;margin:0 16px;border-radius:12px;flex-shrink:0}
-.tab{flex:1;background:transparent;border:none;color:#8b949e;padding:9px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;transition:.2s;text-transform:uppercase;letter-spacing:.5px}
-.tab.active{background:linear-gradient(135deg,#58a6ff,#1f6feb);color:#fff}
-.tab:active{transform:scale(.97)}
+.stars-picker{display:flex;gap:8px;justify-content:center;margin:10px 0}
+.star-btn{background:transparent;border:none;font-size:32px;cursor:pointer;color:#30363d;transition:.15s;padding:0}
+.star-btn.active{color:#f0b429;transform:scale(1.1)}
+.star-btn:hover{transform:scale(1.2)}
 
-.hidden{display:none!important}
+.submit-btn{width:100%;background:linear-gradient(135deg,#ff6b35,#e8480d);border:none;color:#fff;padding:14px;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:.15s;font-family:inherit}
+.submit-btn:active{transform:scale(.97)}
+
+.review-card{background:linear-gradient(135deg,#1a1210,#0d0a08);border:1px solid rgba(255,107,53,.15);border-radius:14px;padding:16px;margin-bottom:12px}
+.review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px;flex-wrap:wrap}
+.review-name{font-weight:900;font-size:14px;color:#fff}
+.review-stars{color:#f0b429;font-size:14px;letter-spacing:2px}
+.review-date{font-size:10px;color:#5a5048;margin-left:auto}
+.review-text{font-size:13px;color:#c9c0b8;line-height:1.5}
+.review-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ff6b35,#f0b429);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:14px;flex-shrink:0}
+.review-head-inner{display:flex;align-items:center;gap:10px;flex:1}
+.empty-reviews{text-align:center;padding:30px;color:#5a5048;font-size:13px}
+
+/* БРОНИРОВАНИЕ */
+.booking-section{background:linear-gradient(135deg,#1a0505,#000);padding:60px 20px}
+.booking-form{background:linear-gradient(135deg,#1a1210,#0d0a08);border:2px solid rgba(255,107,53,.3);border-radius:18px;padding:24px;max-width:500px;margin:0 auto}
+.booking-form .form-title{color:#ff6b35;font-size:20px;margin-bottom:6px}
+.booking-form .form-sub{text-align:center;font-size:12px;color:#8b8074;margin-bottom:20px}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,#ff6b35,#e8480d);padding:60px 20px;text-align:center;position:relative;overflow:hidden}
+.cta-inner{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.cta h2{font-size:38px;font-weight:900;margin-bottom:14px;letter-spacing:-.5px}
+.cta p{font-size:16px;opacity:.95;margin-bottom:26px}
+.cta .btn{background:#000;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+
+/* FLOATING WHATSAPP */
+.whatsapp-float{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;box-shadow:0 8px 24px rgba(37,211,102,.5);z-index:100;animation:wa-pulse 2s infinite;border:none;cursor:pointer}
+@keyframes wa-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.whatsapp-float:active{transform:scale(.9)}
 
 /* TOAST */
-.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#161b22;border:2px solid #3fb950;color:#3fb950;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;transition:.3s;z-index:200;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:linear-gradient(135deg,#3fb950,#1a7f37);color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:800;transition:.3s;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:90%;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{background:linear-gradient(135deg,#f85149,#b62324)}
+
+/* МОДАЛКА ТЕЛЕФОНА */
+.phone-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(8px);animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.phone-modal-inner{background:linear-gradient(135deg,#1a1210,#0d0a08);border:2px solid #ff6b35;border-radius:20px;padding:28px 24px;text-align:center;max-width:340px;width:100%;animation:slideUpM .3s}
+@keyframes slideUpM{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.phone-modal-inner .big-icon{font-size:50px;margin-bottom:12px}
+.phone-modal-inner .lbl{font-size:14px;color:#8b8074;margin-bottom:8px;text-transform:uppercase;letter-spacing:2px;font-weight:800}
+.phone-modal-inner .phone-num{font-size:24px;font-weight:900;color:#ff6b35;margin-bottom:20px;user-select:text;word-break:break-all}
+.phone-modal-inner .modal-btn{display:block;width:100%;background:linear-gradient(135deg,#ff6b35,#e8480d);color:#fff;padding:14px;border-radius:12px;font-size:15px;font-weight:900;text-decoration:none;margin-bottom:10px;border:none;cursor:pointer;font-family:inherit;text-align:center}
+.phone-modal-inner .modal-btn.secondary{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2)}
+.phone-modal-inner .close-btn{background:transparent;border:none;color:#8b8074;padding:10px;font-size:13px;cursor:pointer;font-family:inherit}
+
+footer{background:#0a0605;padding:30px 20px;text-align:center;border-top:1px solid rgba(255,255,255,.05)}
+footer p{font-size:12px;color:#5a5048}
+
+@media(max-width:768px){
+  .hero h1{font-size:38px}
+  .section{padding:50px 16px}
+  .section-title{font-size:28px}
+  .contact-grid{grid-template-columns:1fr}
+  .info-strip-inner{grid-template-columns:1fr 1fr}
+  .btn{padding:14px 24px;font-size:14px}
+  .cta h2{font-size:26px}
+  .menu-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .menu-emoji{font-size:44px}
+  .menu-name{font-size:15px}
+  .menu-ingr{font-size:11px}
+  .menu-price{font-size:17px}
+  .rating-big{font-size:52px}
+  .whatsapp-float{width:54px;height:54px;font-size:26px}
+}
+@media(max-width:400px){.hero h1{font-size:32px}.menu-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<div class="app">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="logo-bar">
+      <div class="logo-icon">🍕</div>
+      <div class="logo-text">SUSHIPIZZA WESTA</div>
+    </div>
 
-  <!-- ШАПКА -->
-  <div class="header">
-    <div class="logo">@ ЮЗЕРНЕЙМЫ</div>
-    <div class="subtitle">Красивые для Telegram</div>
+    <div class="status-badge" id="statusBadge">
+      <span class="status-dot"></span>
+      <span id="statusText">Открыто до 22:00</span>
+    </div>
+
+    <h1>Вкусная пицца<br>и <span>суши с душой</span></h1>
+    <p>Готовим из свежих продуктов каждый день. Пицца на тонком тесте, роллы по авторским рецептам, доставка по Варне за 30 минут.</p>
+
+    <div class="view-counter">👁 Этот сайт посмотрели <b>{{ views }}</b> раз</div>
+
+    <div class="hero-buttons">
+      <a href="#menu" class="btn btn-primary">🍕 Смотреть меню</a>
+      <button class="btn btn-secondary" onclick="callPhone()">📞 Позвонить</button>
+    </div>
   </div>
+</section>
 
-  <!-- ТАБЫ -->
-  <div class="tabs" style="margin-bottom:12px">
-    <button class="tab active" id="tabGen" onclick="setTab('gen')">🎲 Генератор</button>
-    <button class="tab" id="tabFav" onclick="setTab('fav')">❤️ Избранное</button>
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div class="info-item">
+      <div class="info-icon">📍</div>
+      <div>
+        <div class="lbl">Адрес</div>
+        <div class="val">ул. Советская, 135/3</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">⏰</div>
+      <div>
+        <div class="lbl">Часы работы</div>
+        <div class="val">Ежедневно до 22:00</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">📞</div>
+      <div>
+        <div class="lbl">Телефон</div>
+        <div class="val"><a href="#" onclick="callPhone();return false;">8 (982) 330-90-67</a></div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">⭐</div>
+      <div>
+        <div class="lbl">Рейтинг</div>
+        <div class="val">{{ avg }} · {{ reviews|length }} отзывов</div>
+      </div>
+    </div>
   </div>
-
-  <!-- ЭКРАН ГЕНЕРАЦИИ -->
-  <div class="content" id="content-gen">
-
-    <div class="section-title">🎨 Выбери стиль</div>
-    <div class="styles" id="stylesGrid"></div>
-
-    <div class="section-title">📏 Длина</div>
-    <div class="length-row" id="lengthRow"></div>
-
-    <button class="gen-btn" onclick="generate()">
-      <span style="font-size:20px">🎲</span> СГЕНЕРИРОВАТЬ
-    </button>
-
-    <div id="results" style="margin-top:10px"></div>
-  </div>
-
-  <!-- ЭКРАН ИЗБРАННОГО -->
-  <div class="content hidden" id="content-fav">
-    <div class="section-title">❤️ Избранные юзернеймы</div>
-    <div id="favResults"></div>
-  </div>
-
 </div>
+
+<!-- MENU -->
+<section class="section" id="menu">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-tag">🔥 Меню</div>
+      <h2 class="section-title">Что у нас вкусного</h2>
+      <p class="section-desc">Каждое блюдо готовим после заказа. Только свежие ингредиенты</p>
+    </div>
+
+    <div class="hits-row">
+      <div class="hit"><span class="fire">🔥</span> Хиты продаж:</div>
+      <div class="hit">Пепперони</div>
+      <div class="hit">Филадельфия</div>
+      <div class="hit">4 сыра</div>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-emoji">🍕</div>
+        <div class="menu-name">Пицца «Маргарита»</div>
+        <div class="menu-ingr">Томатный соус, моцарелла, базилик, орегано</div>
+        <div class="menu-footer">
+          <div class="menu-price">450 ₽</div>
+          <button class="menu-order" onclick="orderItem('Пицца Маргарита')">Заказать</button>
+        </div>
+      </div>
+
+      <div class="menu-item hit-item">
+        <div class="hit-badge">🔥 ХИТ</div>
+        <div class="menu-emoji">🍕</div>
+        <div class="menu-name">Пицца «Пепперони»</div>
+        <div class="menu-ingr">Томатный соус, моцарелла, пепперони, орегано</div>
+        <div class="menu-footer">
+          <div class="menu-price">550 ₽</div>
+          <button class="menu-order" onclick="orderItem('Пицца Пепперони')">Заказать</button>
+        </div>
+      </div>
+
+      <div class="menu-item hit-item">
+        <div class="hit-badge">🔥 ХИТ</div>
+        <div class="menu-emoji">🍕</div>
+        <div class="menu-name">Пицца «4 сыра»</div>
+        <div class="menu-ingr">Моцарелла, чеддер, дор-блю, пармезан</div>
+        <div class="menu-footer">
+          <div class="menu-price">650 ₽</div>
+          <button class="menu-order" onclick="orderItem('Пицца 4 сыра')">Заказать</button>
+        </div>
+      </div>
+
+      <div class="menu-item hit-item">
+        <div class="hit-badge">🔥 ХИТ</div>
+        <div class="menu-emoji">🍣</div>
+        <div class="menu-name">Ролл «Филадельфия»</div>
+        <div class="menu-ingr">Лосось, сливочный сыр, огурец, рис, нори</div>
+        <div class="menu-footer">
+          <div class="menu-price">520 ₽</div>
+          <button class="menu-order" onclick="orderItem('Ролл Филадельфия')">Заказать</button>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-emoji">🍣</div>
+        <div class="menu-name">Ролл «Калифорния»</div>
+        <div class="menu-ingr">Краб, авокадо, огурец, икра тобико</div>
+        <div class="menu-footer">
+          <div class="menu-price">480 ₽</div>
+          <button class="menu-order" onclick="orderItem('Ролл Калифорния')">Заказать</button>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-emoji">🍜</div>
+        <div class="menu-name">WOK с курицей</div>
+        <div class="menu-ingr">Лапша, курица, овощи, соус терияки</div>
+        <div class="menu-footer">
+          <div class="menu-price">390 ₽</div>
+          <button class="menu-order" onclick="orderItem('WOK с курицей')">Заказать</button>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-emoji">🥗</div>
+        <div class="menu-name">Салат «Цезарь»</div>
+        <div class="menu-ingr">Курица, романо, пармезан, гренки, соус</div>
+        <div class="menu-footer">
+          <div class="menu-price">350 ₽</div>
+          <button class="menu-order" onclick="orderItem('Салат Цезарь')">Заказать</button>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-emoji">🍰</div>
+        <div class="menu-name">Чизкейк</div>
+        <div class="menu-ingr">Нежный сливочный десерт с ягодным соусом</div>
+        <div class="menu-footer">
+          <div class="menu-price">280 ₽</div>
+          <button class="menu-order" onclick="orderItem('Чизкейк')">Заказать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- БРОНИРОВАНИЕ -->
+<section class="booking-section" id="booking">
+  <div class="section-head">
+    <div class="section-tag">📅 Бронь</div>
+    <h2 class="section-title">Забронировать столик</h2>
+  </div>
+  <div class="booking-form">
+    <div class="form-title">📅 Забронировать столик</div>
+    <div class="form-sub">Мы позвоним и подтвердим бронь</div>
+
+    <div class="form-group">
+      <label class="form-label">Ваше имя</label>
+      <input type="text" class="form-input" id="bookName" placeholder="Например: Иван">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Телефон</label>
+      <input type="tel" class="form-input" id="bookPhone" placeholder="+7 (___) ___-__-__">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Сколько гостей</label>
+      <input type="number" class="form-input" id="bookGuests" value="2" min="1" max="20">
+    </div>
+
+    <button class="submit-btn" onclick="submitBooking()">Забронировать</button>
+  </div>
+</section>
+
+<!-- ОТЗЫВЫ -->
+<section class="section reviews-section" id="reviews">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-tag">💬 Отзывы</div>
+      <h2 class="section-title">Что говорят клиенты</h2>
+    </div>
+
+    <div class="rating-summary">
+      <div class="rating-big">{{ avg }}</div>
+      <div class="rating-stars">★★★★★</div>
+      <div class="rating-count">на основе {{ reviews|length }} отзывов</div>
+    </div>
+
+    <div class="review-form">
+      <div class="form-title">✍️ Оставить отзыв</div>
+      <div class="form-group">
+        <label class="form-label">Ваше имя</label>
+        <input type="text" class="form-input" id="reviewName" placeholder="Как вас зовут?">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Оценка</label>
+        <div class="stars-picker" id="starsPicker">
+          <button class="star-btn" onclick="setRating(1)">★</button>
+          <button class="star-btn" onclick="setRating(2)">★</button>
+          <button class="star-btn" onclick="setRating(3)">★</button>
+          <button class="star-btn" onclick="setRating(4)">★</button>
+          <button class="star-btn" onclick="setRating(5)">★</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Отзыв</label>
+        <textarea class="form-textarea" id="reviewText" placeholder="Расскажите, как всё прошло..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitReview()">Отправить отзыв</button>
+    </div>
+
+    <div id="reviewsList">
+      {% if reviews %}
+        {% for r in reviews %}
+        <div class="review-card">
+          <div class="review-head">
+            <div class="review-head-inner">
+              <div class="review-avatar">{{ r[0][0]|upper }}</div>
+              <div class="review-name">{{ r[0] }}</div>
+            </div>
+            <div class="review-stars">{% for i in range(r[1]) %}★{% endfor %}</div>
+            <div class="review-date">{{ r[3] }}</div>
+          </div>
+          <div class="review-text">{{ r[2] }}</div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty-reviews">Пока отзывов нет. Будьте первым! ⭐</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-tag">📍 Контакты</div>
+      <h2 class="section-title">Как нас найти</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card" onclick="callPhone()">
+        <div class="icon">📞</div>
+        <h3>Телефон</h3>
+        <div class="value">8 (982) 330-90-67</div>
+        <div class="sub">Нажми, чтобы позвонить</div>
+      </div>
+      <div class="contact-card" onclick="openWhatsApp()">
+        <div class="icon">💬</div>
+        <h3>WhatsApp</h3>
+        <div class="value">Написать в WhatsApp</div>
+        <div class="sub">Заказ в 1 клик</div>
+      </div>
+      <div class="contact-card">
+        <div class="icon">📍</div>
+        <h3>Адрес</h3>
+        <div class="value">ул. Советская, 135/3</div>
+        <div class="sub">Варна, Челябинская обл.</div>
+      </div>
+      <div class="contact-card">
+        <div class="icon">⏰</div>
+        <h3>Часы работы</h3>
+        <div class="value">Ежедневно</div>
+        <div class="sub">с 10:00 до 22:00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Закажи прямо сейчас 🍕</h2>
+    <p>Свежая пицца и суши уже через 30 минут</p>
+    <button class="btn" onclick="callPhone()">📞 Позвонить и заказать</button>
+  </div>
+</section>
+
+<footer><p>© Кафе SushiPizza «Westa» · Варна · 2026</p></footer>
+
+<!-- ПЛАВАЮЩАЯ КНОПКА WHATSAPP -->
+<button class="whatsapp-float" onclick="openWhatsApp()" title="Написать в WhatsApp">💬</button>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ============================================================
-// ГЕНЕРАТОР ЮЗЕРНЕЙМОВ
+// ДАННЫЕ
 // ============================================================
-
-const STYLES = {
-  premium: {
-    name: "Премиум",
-    emoji: "💎",
-    desc: "vip, gold, luxury",
-    words: ["vip","gold","luxury","premium","royal","elite","king","queen","boss","lord","duke","boss","rich","money","diamond","crown","empire","luxe","noble","regal"],
-    prefixes: ["the_","mr_","_","x_","official_"],
-    suffixes: ["_off","_vip","_pro","_king","_royal","_x","_official","_boss","_gold"],
-    useDigits: true,
-    digits: ["777","888","100","99","x","1"]
-  },
-  aesthetic: {
-    name: "Эстетика",
-    emoji: "🌸",
-    desc: "soft, moon, dream",
-    words: ["moon","star","dream","soft","angel","cloud","rose","pink","soul","light","aurora","sunset","dawn","veil","luna","astra","aura","bloom","mist","sky"],
-    prefixes: ["_","x_","its_","the_","a_"],
-    suffixes: ["_","xx","_x","_core","_vibes","_aesthetic","_love","_soft"],
-    useDigits: false,
-    digits: []
-  },
-  gamer: {
-    name: "Геймер",
-    emoji: "🎮",
-    desc: "pro, killer, xx",
-    words: ["pro","killer","sniper","ghost","ninja","shadow","hunter","beast","doom","venom","dragon","wolf","hawk","viper","reaper","storm","blade","phantom","cyber","warrior"],
-    prefixes: ["xx_","_","pro_","mr_","the_"],
-    suffixes: ["_xx","_pro","_gg","_yt","_kill","_666","_xd","_op","_1tap","_aces"],
-    useDigits: true,
-    digits: ["666","777","228","999","13","007"]
-  },
-  crypto: {
-    name: "Крипто",
-    emoji: "💰",
-    desc: "trader, invest, btc",
-    words: ["crypto","trader","invest","btc","eth","block","coin","chain","bit","satoshi","nft","defi","wallet","token","hodl","bull","pump","moon","rich","earn"],
-    prefixes: ["_","mr_","pro_","the_"],
-    suffixes: ["_btc","_eth","_pro","_trader","_hodl","_crypto","_invest","_money"],
-    useDigits: true,
-    digits: ["777","100x","21","1000","88","999"]
-  },
-  short: {
-    name: "Короткие",
-    emoji: "⚡",
-    desc: "3-4 буквы",
-    words: ["zen","pro","max","neo","ace","top","one","red","fox","sky","sun","ice","art","key","god","raw","win","x","vip","lux"],
-    prefixes: [""],
-    suffixes: [""],
-    useDigits: false,
-    digits: []
-  },
-  cute: {
-    name: "Милые",
-    emoji: "🐱",
-    desc: "kitty, bunny, honey",
-    words: ["kitty","bunny","honey","cutie","baby","kiss","love","hug","sunny","peach","cherry","muffin","cupcake","smile","happy","angel","fairy","flower","sweet","candy"],
-    prefixes: ["_","its_","little_","baby_"],
-    suffixes: ["_","_chan","_love","_cat","_honey","_kiss","_bunny"],
-    useDigits: false,
-    digits: []
-  },
-  boss: {
-    name: "Дерзкие",
-    emoji: "🔥",
-    desc: "boss, legend, gang",
-    words: ["boss","legend","gang","thug","king","capo","mafia","shot","dope","flex","beast","wild","savage","ruler","chief","sigma","alpha","topg","goat"],
-    prefixes: ["_","mr_","the_"],
-    suffixes: ["_boss","_legend","_gang","_666","_xl","_official","_topg","_goat"],
-    useDigits: true,
-    digits: ["666","888","1","7","9"]
-  },
-  mystery: {
-    name: "Загадка",
-    emoji: "🌙",
-    desc: "hidden, secret, ghost",
-    words: ["hidden","secret","ghost","shadow","unknown","veil","mystic","silent","void","dark","night","raven","wolf","phantom","lost","wander","echo","whisper","rune","arcane"],
-    prefixes: ["_","mr_","the_","x_"],
-    suffixes: ["_","_x","_ghost","_dark","_void","_silent","_hidden"],
-    useDigits: false,
-    digits: []
-  },
-};
-
-const LENGTHS = [
-  { id: "any", name: "Любая", min: 0, max: 100 },
-  { id: "s", name: "3-5", min: 3, max: 5 },
-  { id: "m", name: "6-9", min: 6, max: 9 },
-  { id: "l", name: "10-15", min: 10, max: 15 },
-];
-
-const FAV_KEY = "usernames_fav_v1";
-
-let state = {
-  style: "premium",
-  length: "any",
-  results: [],
-  favorites: JSON.parse(localStorage.getItem(FAV_KEY) || "[]"),
-  tab: "gen",
-};
+const PHONE = '+79823309067';
+const PHONE_DISPLAY = '8 (982) 330-90-67';
 
 // ============================================================
-// ГЕНЕРАЦИЯ
+// СТАТУС ОТКРЫТО/ЗАКРЫТО
 // ============================================================
-function randomOf(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-function generate() {
-  const style = STYLES[state.style];
-  const lenFilter = LENGTHS.find(l => l.id === state.length);
-  const results = [];
-  const seen = new Set();
-  let attempts = 0;
-  const targetCount = 100;
-  const maxAttempts = 3000;
-
-  while (results.length < targetCount && attempts < maxAttempts) {
-    attempts++;
-
-    const word = randomOf(style.words);
-    const usePrefix = Math.random() < 0.5;
-    const useSuffix = Math.random() < 0.6;
-    const useDigit = style.useDigits && style.digits.length > 0 && Math.random() < 0.35;
-
-    let name = "";
-    if (usePrefix && style.prefixes.length) name += randomOf(style.prefixes);
-    name += word;
-    if (useSuffix && style.suffixes.length) name += randomOf(style.suffixes);
-    if (useDigit) name += randomOf(style.digits);
-
-    // Убрать лишние символы
-    name = name.replace(/^[_\.]+|[_\.]+$/g, '').replace(/__+/g, '_').replace(/\.\.+/g, '.');
-    
-    if (!name) continue;
-    if (name.length < 3) continue;
-
-    // Проверка длины
-    if (state.length !== "any") {
-      if (name.length < lenFilter.min || name.length > lenFilter.max) continue;
-    }
-
-    // Уникальность
-    if (seen.has(name)) continue;
-    seen.add(name);
-
-    results.push(name);
-  }
-
-  state.results = results;
-  renderResults();
-
-  if (results.length === 0) {
-    showToast('😔 Ничего не подобралось — попробуй другой стиль/длину');
+function checkStatus() {
+  const now = new Date();
+  const hour = now.getHours();
+  const isOpen = hour >= 10 && hour < 22;
+  const badge = document.getElementById('statusBadge');
+  const text = document.getElementById('statusText');
+  if (isOpen) {
+    badge.classList.remove('closed');
+    text.textContent = 'Открыто · Закроется в 22:00';
   } else {
-    showToast('✨ Сгенерировано: ' + results.length);
+    badge.classList.add('closed');
+    text.textContent = 'Закрыто · Откроется в 10:00';
   }
 }
-
-// ============================================================
-// РЕНДЕР
-// ============================================================
-function renderStyles() {
-  const el = document.getElementById('stylesGrid');
-  el.innerHTML = Object.entries(STYLES).map(([key, s]) =>
-    `<div class="style-btn ${state.style === key ? 'active' : ''}" onclick="setStyle('${key}')">
-      <div class="style-emoji">${s.emoji}</div>
-      <div class="style-name">${s.name}</div>
-      <div class="style-desc">${s.desc}</div>
-    </div>`
-  ).join('');
-}
-
-function renderLengths() {
-  const el = document.getElementById('lengthRow');
-  el.innerHTML = LENGTHS.map(l =>
-    `<button class="length-btn ${state.length === l.id ? 'active' : ''}" onclick="setLength('${l.id}')">${l.name}</button>`
-  ).join('');
-}
-
-function renderResults() {
-  const el = document.getElementById('results');
-  if (!state.results.length) {
-    el.innerHTML = `
-      <div class="empty">
-        <div class="big">🎲</div>
-        <h3>Нажми «Сгенерировать»</h3>
-        <p>Появятся красивые варианты юзернеймов</p>
-      </div>`;
-    return;
-  }
-
-  const html = `
-    <div class="results-info">Найдено: <b>${state.results.length}</b> вариантов · тапни ❤️ чтобы сохранить</div>
-    ${state.results.map(name => {
-      const isFav = state.favorites.includes(name);
-      return `
-        <div class="username-card ${isFav ? 'fav' : ''}">
-          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
-            <div class="username-text"><span class="at">@</span>${escapeHtml(name)}</div>
-            <div class="username-length">${name.length} симв.</div>
-          </div>
-          <div class="username-actions">
-            <button class="us-btn" onclick="event.stopPropagation();copyName('${escapeAttr(name)}', this)" title="Копировать">📋</button>
-            <button class="us-btn ${isFav ? 'fav-active' : ''}" onclick="event.stopPropagation();toggleFav('${escapeAttr(name)}')" title="Избранное">${isFav ? '❤️' : '🤍'}</button>
-            <a class="us-btn" href="https://t.me/username_bot" target="_blank" onclick="event.stopPropagation()" title="Проверить в Telegram">✅</a>
-          </div>
-        </div>
-      `;
-    }).join('')}
-  `;
-  el.innerHTML = html;
-}
-
-function renderFav() {
-  const el = document.getElementById('favResults');
-  if (!state.favorites.length) {
-    el.innerHTML = `
-      <div class="empty">
-        <div class="big">❤️</div>
-        <h3>Избранных пока нет</h3>
-        <p>Тапни на ❤️ рядом с юзернеймом, чтобы сохранить</p>
-      </div>`;
-    return;
-  }
-
-  el.innerHTML = state.favorites.map(name => `
-    <div class="username-card fav">
-      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
-        <div class="username-text"><span class="at">@</span>${escapeHtml(name)}</div>
-        <div class="username-length">${name.length} симв.</div>
-      </div>
-      <div class="username-actions">
-        <button class="us-btn" onclick="copyName('${escapeAttr(name)}', this)">📋</button>
-        <button class="us-btn fav-active" onclick="toggleFav('${escapeAttr(name)}')">❤️</button>
-        <a class="us-btn" href="https://t.me/username_bot" target="_blank">✅</a>
-      </div>
-    </div>
-  `).join('');
-}
-
-function escapeHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-function escapeAttr(s) {
-  return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-}
-
-// ============================================================
-// ДЕЙСТВИЯ
-// ============================================================
-function setStyle(s) {
-  state.style = s;
-  renderStyles();
-  generate();
-}
-
-function setLength(l) {
-  state.length = l;
-  renderLengths();
-}
-
-function setTab(t) {
-  state.tab = t;
-  document.getElementById('tabGen').classList.toggle('active', t === 'gen');
-  document.getElementById('tabFav').classList.toggle('active', t === 'fav');
-  document.getElementById('content-gen').classList.toggle('hidden', t !== 'gen');
-  document.getElementById('content-fav').classList.toggle('hidden', t !== 'fav');
-  if (t === 'fav') renderFav();
-}
-
-async function copyName(name, btn) {
-  try {
-    await navigator.clipboard.writeText('@' + name);
-    showToast('📋 Скопировано: @' + name);
-    if (btn) {
-      btn.classList.add('copied');
-      btn.textContent = '✓';
-      setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋'; }, 1200);
-    }
-    if (navigator.vibrate) navigator.vibrate(20);
-  } catch (e) {
-    const ta = document.createElement('textarea');
-    ta.value = '@' + name;
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); showToast('📋 Скопировано'); }
-    catch (err) { showToast('❌ Не удалось'); }
-    document.body.removeChild(ta);
-  }
-}
-
-function toggleFav(name) {
-  const idx = state.favorites.indexOf(name);
-  if (idx > -1) {
-    state.favorites.splice(idx, 1);
-    showToast('💔 Убрано из избранного');
-  } else {
-    state.favorites.push(name);
-    showToast('❤️ Добавлено в избранное');
-  }
-  localStorage.setItem(FAV_KEY, JSON.stringify(state.favorites));
-  renderResults();
-  if (state.tab === 'fav') renderFav();
-}
+checkStatus();
+setInterval(checkStatus, 60000);
 
 // ============================================================
 // TOAST
 // ============================================================
 let toastTimer = null;
-function showToast(text) {
+function showToast(text, isError) {
   const t = document.getElementById('toast');
   t.textContent = text;
-  t.classList.add('show');
+  t.className = 'toast show' + (isError ? ' error' : '');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+  toastTimer = setTimeout(() => t.className = 'toast' + (isError ? ' error' : ''), 2500);
 }
 
 // ============================================================
-// ИНИЦИАЛИЗАЦИЯ
+// ЗВОНОК
 // ============================================================
-function init() {
-  renderStyles();
-  renderLengths();
-  generate();
+function callPhone() {
+  // Пробуем открыть звонилку
+  try {
+    window.location.href = 'tel:' + PHONE;
+  } catch (e) {}
+  // Через 500мс показываем модалку с номером
+  setTimeout(() => {
+    showPhoneModal();
+  }, 500);
 }
-init();
+
+// ============================================================
+// МОДАЛКА С ТЕЛЕФОНОМ
+// ============================================================
+function showPhoneModal() {
+  const old = document.getElementById('phoneModal');
+  if (old) old.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'phoneModal';
+  modal.className = 'phone-modal';
+  modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+
+  modal.innerHTML = `
+    <div class="phone-modal-inner">
+      <div class="big-icon">📞</div>
+      <div class="lbl">Наш телефон</div>
+      <div class="phone-num">${PHONE_DISPLAY}</div>
+      <a href="tel:${PHONE}" class="modal-btn">📞 Позвонить</a>
+      <button class="modal-btn secondary" onclick="copyPhone()">📋 Скопировать номер</button>
+      <button class="close-btn" onclick="document.getElementById('phoneModal').remove()">Закрыть</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+// ============================================================
+// КОПИРОВАНИЕ ТЕЛЕФОНА
+// ============================================================
+function copyPhone() {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(PHONE_DISPLAY).then(() => {
+      showToast('📋 Номер скопирован: ' + PHONE_DISPLAY);
+    }).catch(() => {
+      fallbackCopy(PHONE_DISPLAY);
+    });
+  } else {
+    fallbackCopy(PHONE_DISPLAY);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('📋 Номер скопирован');
+  } catch (e) {
+    showToast('❌ Не удалось скопировать', true);
+  }
+  document.body.removeChild(ta);
+}
+
+// ============================================================
+// WHATSAPP
+// ============================================================
+function openWhatsApp(text) {
+  const msg = text ? encodeURIComponent(text) : encodeURIComponent('Здравствуйте! Хочу сделать заказ');
+  const url = 'https://wa.me/79823309067?text=' + msg;
+  try {
+    window.open(url, '_blank');
+  } catch (e) {
+    // Если не открылось — копируем телефон
+    copyPhone();
+    showToast('📋 Скопировано. Откройте WhatsApp и напишите нам!');
+  }
+}
+
+// ============================================================
+// ЗАКАЗ БЛЮДА
+// ============================================================
+function orderItem(name) {
+  const msg = 'Здравствуйте! Хочу заказать: ' + name;
+  // Копируем телефон в буфер
+  copyPhoneSilent();
+  showToast('✅ Заказ: ' + name + ' · Открываем WhatsApp...');
+  // Открываем WhatsApp с текстом
+  setTimeout(() => {
+    openWhatsApp(msg);
+  }, 400);
+}
+
+function copyPhoneSilent() {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(PHONE_DISPLAY).catch(() => {});
+  }
+}
+
+// ============================================================
+// ЗВЁЗДЫ ОТЗЫВОВ
+// ============================================================
+let selectedRating = 5;
+function setRating(n) {
+  selectedRating = n;
+  document.querySelectorAll('.star-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i < n);
+  });
+}
+setRating(5);
+
+// ============================================================
+// ОТПРАВКА ОТЗЫВА
+// ============================================================
+async function submitReview() {
+  const name = document.getElementById('reviewName').value.trim();
+  const text = document.getElementById('reviewText').value.trim();
+
+  if (!name) { showToast('❌ Введите имя', true); return; }
+  if (!text) { showToast('❌ Напишите отзыв', true); return; }
+
+  try {
+    const res = await fetch('/api/review', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name, rating: selectedRating, text})
+    });
+    const data = await res.json();
+    if (data.ok) {
+      showToast('✅ Спасибо за отзыв!');
+      document.getElementById('reviewName').value = '';
+      document.getElementById('reviewText').value = '';
+      const currentRating = selectedRating;
+      setRating(5);
+      // Добавим карточку в список
+      const list = document.getElementById('reviewsList');
+      const empty = list.querySelector('.empty-reviews');
+      if (empty) empty.remove();
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      card.innerHTML = `
+        <div class="review-head">
+          <div class="review-head-inner">
+            <div class="review-avatar">${escapeHtml(name[0]).toUpperCase()}</div>
+            <div class="review-name">${escapeHtml(name)}</div>
+          </div>
+          <div class="review-stars">${'★'.repeat(currentRating)}</div>
+          <div class="review-date">только что</div>
+        </div>
+        <div class="review-text">${escapeHtml(text)}</div>
+      `;
+      list.insertBefore(card, list.firstChild);
+    } else {
+      showToast('❌ ' + (data.error || 'Ошибка'), true);
+    }
+  } catch (e) {
+    showToast('❌ Ошибка сети', true);
+  }
+}
+
+// ============================================================
+// БРОНИРОВАНИЕ
+// ============================================================
+async function submitBooking() {
+  const name = document.getElementById('bookName').value.trim();
+  const phone = document.getElementById('bookPhone').value.trim();
+  const guests = document.getElementById('bookGuests').value || 2;
+
+  if (!name) { showToast('❌ Введите имя', true); return; }
+  if (!phone) { showToast('❌ Введите телефон', true); return; }
+
+  try {
+    const res = await fetch('/api/book', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name, phone, guests})
+    });
+    const data = await res.json();
+    if (data.ok) {
+      showToast('✅ Столик забронирован! Мы позвоним.');
+      document.getElementById('bookName').value = '';
+      document.getElementById('bookPhone').value = '';
+    } else {
+      showToast('❌ ' + (data.error || 'Ошибка'), true);
+    }
+  } catch (e) {
+    showToast('❌ Ошибка сети', true);
+  }
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Плавный скролл
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id.length > 1) {
+      e.preventDefault();
+      const el = document.querySelector(id);
+      if (el) el.scrollIntoView({behavior:'smooth'});
+    }
+  });
+});
 </script>
 </body>
-</html>
+  </html>
