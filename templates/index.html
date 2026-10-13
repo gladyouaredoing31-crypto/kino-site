@@ -9,7 +9,6 @@
 html{scroll-behavior:smooth}
 body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;overflow-x:hidden}
 
-/* HERO */
 .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:30px 20px;background:linear-gradient(135deg,#2a0f0a 0%,#1a0505 50%,#000 100%);overflow:hidden}
 .hero::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,#ff6b35,transparent 70%);opacity:.3;filter:blur(60px);animation:float 6s ease-in-out infinite}
 .hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,#f0b429,transparent 70%);opacity:.2;filter:blur(60px);animation:float 6s ease-in-out infinite reverse}
@@ -29,9 +28,6 @@ body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 @keyframes shine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
 .hero p{font-size:17px;color:#c9c0b8;line-height:1.6;max-width:600px;margin-bottom:24px}
 
-.view-counter{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:12px;font-size:12px;color:#8b8074;margin-bottom:20px}
-.view-counter b{color:#ff6b35}
-
 .hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;text-decoration:none;transition:.2s;border:none;font-family:inherit;letter-spacing:.5px}
 .btn-primary{background:linear-gradient(135deg,#ff6b35,#e8480d);color:#fff;box-shadow:0 8px 24px rgba(255,107,53,.5)}
@@ -40,7 +36,6 @@ body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .btn-secondary:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
 .btn:active{transform:scale(.97)}
 
-/* INFO STRIP */
 .info-strip{background:linear-gradient(90deg,#1a0505,#2a0f0a,#1a0505);border-top:1px solid rgba(255,107,53,.2);border-bottom:1px solid rgba(255,107,53,.2);padding:20px}
 .info-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
 .info-item{display:flex;align-items:center;gap:12px}
@@ -49,7 +44,6 @@ body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .info-item .val{font-size:14px;font-weight:800;margin-top:2px}
 .info-item .val a{color:#ff6b35;text-decoration:none}
 
-/* SECTION */
 .section{padding:80px 20px}
 .section-inner{max-width:1100px;margin:0 auto}
 .section-head{text-align:center;margin-bottom:50px}
@@ -57,12 +51,10 @@ body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .section-title{font-size:40px;font-weight:900;letter-spacing:-.5px;margin-bottom:12px;line-height:1.1}
 .section-desc{font-size:15px;color:#8b8074;max-width:600px;margin:0 auto;line-height:1.6}
 
-/* HITS */
 .hits-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
 .hit{background:linear-gradient(135deg,#1a1210,#0d0a08);border:1px solid rgba(255,107,53,.3);border-radius:12px;padding:10px 18px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:8px}
 .hit .fire{color:#ff6b35}
 
-/* MENU GRID */
 .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
 .menu-item{background:linear-gradient(135deg,#1a1210,#0d0a08);border:1px solid rgba(255,107,53,.15);border-radius:18px;padding:20px;transition:.3s;position:relative;overflow:hidden}
 .menu-item.hit-item{border-color:rgba(255,107,53,.5);box-shadow:0 0 20px rgba(255,107,53,.2)}
@@ -77,7 +69,6 @@ body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .menu-order:hover{transform:scale(1.05)}
 .menu-order:active{transform:scale(.95)}
 
-/* КОНТАКТЫ */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
 .contact-card{background:linear-gradient(135deg,#1a1210,#0d0a08);border:1px solid rgba(255,107,53,.2);border-radius:18px;padding:28px;text-align:center;cursor:pointer;transition:.2s}
 .contact-card:active{transform:scale(.98)}
@@ -87,7 +78,6 @@ body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .contact-card .value a{color:#ff6b35;text-decoration:none}
 .contact-card .sub{font-size:12px;color:#8b8074}
 
-/* ОТЗЫВЫ */
 .reviews-section{background:#0a0605}
 .rating-summary{text-align:center;margin-bottom:30px}
 .rating-big{font-size:64px;font-weight:900;background:linear-gradient(135deg,#f0b429,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
@@ -121,30 +111,25 @@ body{background:#0d0a08;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .review-head-inner{display:flex;align-items:center;gap:10px;flex:1}
 .empty-reviews{text-align:center;padding:30px;color:#5a5048;font-size:13px}
 
-/* БРОНИРОВАНИЕ */
 .booking-section{background:linear-gradient(135deg,#1a0505,#000);padding:60px 20px}
 .booking-form{background:linear-gradient(135deg,#1a1210,#0d0a08);border:2px solid rgba(255,107,53,.3);border-radius:18px;padding:24px;max-width:500px;margin:0 auto}
 .booking-form .form-title{color:#ff6b35;font-size:20px;margin-bottom:6px}
 .booking-form .form-sub{text-align:center;font-size:12px;color:#8b8074;margin-bottom:20px}
 
-/* CTA */
 .cta{background:linear-gradient(135deg,#ff6b35,#e8480d);padding:60px 20px;text-align:center;position:relative;overflow:hidden}
 .cta-inner{position:relative;z-index:1;max-width:700px;margin:0 auto}
 .cta h2{font-size:38px;font-weight:900;margin-bottom:14px;letter-spacing:-.5px}
 .cta p{font-size:16px;opacity:.95;margin-bottom:26px}
 .cta .btn{background:#000;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 
-/* FLOATING WHATSAPP */
 .whatsapp-float{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;box-shadow:0 8px 24px rgba(37,211,102,.5);z-index:100;animation:wa-pulse 2s infinite;border:none;cursor:pointer}
 @keyframes wa-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 .whatsapp-float:active{transform:scale(.9)}
 
-/* TOAST */
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:linear-gradient(135deg,#3fb950,#1a7f37);color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:800;transition:.3s;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:90%;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.error{background:linear-gradient(135deg,#f85149,#b62324)}
 
-/* МОДАЛКА ТЕЛЕФОНА */
 .phone-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(8px);animation:fadeIn .2s}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .phone-modal-inner{background:linear-gradient(135deg,#1a1210,#0d0a08);border:2px solid #ff6b35;border-radius:20px;padding:28px 24px;text-align:center;max-width:340px;width:100%;animation:slideUpM .3s}
@@ -180,7 +165,6 @@ footer p{font-size:12px;color:#5a5048}
 </head>
 <body>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <div class="logo-bar">
@@ -196,8 +180,6 @@ footer p{font-size:12px;color:#5a5048}
     <h1>Вкусная пицца<br>и <span>суши с душой</span></h1>
     <p>Готовим из свежих продуктов каждый день. Пицца на тонком тесте, роллы по авторским рецептам, доставка по Варне за 30 минут.</p>
 
-    <div class="view-counter">👁 Этот сайт посмотрели <b>{{ views }}</b> раз</div>
-
     <div class="hero-buttons">
       <a href="#menu" class="btn btn-primary">🍕 Смотреть меню</a>
       <button class="btn btn-secondary" onclick="callPhone()">📞 Позвонить</button>
@@ -205,7 +187,6 @@ footer p{font-size:12px;color:#5a5048}
   </div>
 </section>
 
-<!-- INFO STRIP -->
 <div class="info-strip">
   <div class="info-strip-inner">
     <div class="info-item">
@@ -239,7 +220,6 @@ footer p{font-size:12px;color:#5a5048}
   </div>
 </div>
 
-<!-- MENU -->
 <section class="section" id="menu">
   <div class="section-inner">
     <div class="section-head">
@@ -260,10 +240,7 @@ footer p{font-size:12px;color:#5a5048}
         <div class="menu-emoji">🍕</div>
         <div class="menu-name">Пицца «Маргарита»</div>
         <div class="menu-ingr">Томатный соус, моцарелла, базилик, орегано</div>
-        <div class="menu-footer">
-          <div class="menu-price">450 ₽</div>
-          <button class="menu-order" onclick="orderItem('Пицца Маргарита')">Заказать</button>
-        </div>
+        <div class="menu-footer"><div class="menu-price">450 ₽</div><button class="menu-order" onclick="orderItem('Пицца Маргарита')">Заказать</button></div>
       </div>
 
       <div class="menu-item hit-item">
@@ -271,10 +248,7 @@ footer p{font-size:12px;color:#5a5048}
         <div class="menu-emoji">🍕</div>
         <div class="menu-name">Пицца «Пепперони»</div>
         <div class="menu-ingr">Томатный соус, моцарелла, пепперони, орегано</div>
-        <div class="menu-footer">
-          <div class="menu-price">550 ₽</div>
-          <button class="menu-order" onclick="orderItem('Пицца Пепперони')">Заказать</button>
-        </div>
+        <div class="menu-footer"><div class="menu-price">550 ₽</div><button class="menu-order" onclick="orderItem('Пицца Пепперони')">Заказать</button></div>
       </div>
 
       <div class="menu-item hit-item">
@@ -282,10 +256,7 @@ footer p{font-size:12px;color:#5a5048}
         <div class="menu-emoji">🍕</div>
         <div class="menu-name">Пицца «4 сыра»</div>
         <div class="menu-ingr">Моцарелла, чеддер, дор-блю, пармезан</div>
-        <div class="menu-footer">
-          <div class="menu-price">650 ₽</div>
-          <button class="menu-order" onclick="orderItem('Пицца 4 сыра')">Заказать</button>
-        </div>
+        <div class="menu-footer"><div class="menu-price">650 ₽</div><button class="menu-order" onclick="orderItem('Пицца 4 сыра')">Заказать</button></div>
       </div>
 
       <div class="menu-item hit-item">
@@ -293,56 +264,40 @@ footer p{font-size:12px;color:#5a5048}
         <div class="menu-emoji">🍣</div>
         <div class="menu-name">Ролл «Филадельфия»</div>
         <div class="menu-ingr">Лосось, сливочный сыр, огурец, рис, нори</div>
-        <div class="menu-footer">
-          <div class="menu-price">520 ₽</div>
-          <button class="menu-order" onclick="orderItem('Ролл Филадельфия')">Заказать</button>
-        </div>
+        <div class="menu-footer"><div class="menu-price">520 ₽</div><button class="menu-order" onclick="orderItem('Ролл Филадельфия')">Заказать</button></div>
       </div>
 
       <div class="menu-item">
         <div class="menu-emoji">🍣</div>
         <div class="menu-name">Ролл «Калифорния»</div>
         <div class="menu-ingr">Краб, авокадо, огурец, икра тобико</div>
-        <div class="menu-footer">
-          <div class="menu-price">480 ₽</div>
-          <button class="menu-order" onclick="orderItem('Ролл Калифорния')">Заказать</button>
-        </div>
+        <div class="menu-footer"><div class="menu-price">480 ₽</div><button class="menu-order" onclick="orderItem('Ролл Калифорния')">Заказать</button></div>
       </div>
 
       <div class="menu-item">
         <div class="menu-emoji">🍜</div>
         <div class="menu-name">WOK с курицей</div>
         <div class="menu-ingr">Лапша, курица, овощи, соус терияки</div>
-        <div class="menu-footer">
-          <div class="menu-price">390 ₽</div>
-          <button class="menu-order" onclick="orderItem('WOK с курицей')">Заказать</button>
-        </div>
+        <div class="menu-footer"><div class="menu-price">390 ₽</div><button class="menu-order" onclick="orderItem('WOK с курицей')">Заказать</button></div>
       </div>
 
       <div class="menu-item">
         <div class="menu-emoji">🥗</div>
         <div class="menu-name">Салат «Цезарь»</div>
         <div class="menu-ingr">Курица, романо, пармезан, гренки, соус</div>
-        <div class="menu-footer">
-          <div class="menu-price">350 ₽</div>
-          <button class="menu-order" onclick="orderItem('Салат Цезарь')">Заказать</button>
-        </div>
+        <div class="menu-footer"><div class="menu-price">350 ₽</div><button class="menu-order" onclick="orderItem('Салат Цезарь')">Заказать</button></div>
       </div>
 
       <div class="menu-item">
         <div class="menu-emoji">🍰</div>
         <div class="menu-name">Чизкейк</div>
         <div class="menu-ingr">Нежный сливочный десерт с ягодным соусом</div>
-        <div class="menu-footer">
-          <div class="menu-price">280 ₽</div>
-          <button class="menu-order" onclick="orderItem('Чизкейк')">Заказать</button>
-        </div>
+        <div class="menu-footer"><div class="menu-price">280 ₽</div><button class="menu-order" onclick="orderItem('Чизкейк')">Заказать</button></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- БРОНИРОВАНИЕ -->
 <section class="booking-section" id="booking">
   <div class="section-head">
     <div class="section-tag">📅 Бронь</div>
@@ -369,7 +324,6 @@ footer p{font-size:12px;color:#5a5048}
   </div>
 </section>
 
-<!-- ОТЗЫВЫ -->
 <section class="section reviews-section" id="reviews">
   <div class="section-inner">
     <div class="section-head">
@@ -428,7 +382,6 @@ footer p{font-size:12px;color:#5a5048}
   </div>
 </section>
 
-<!-- КОНТАКТЫ -->
 <section class="section">
   <div class="section-inner">
     <div class="section-head">
@@ -464,7 +417,6 @@ footer p{font-size:12px;color:#5a5048}
   </div>
 </section>
 
-<!-- CTA -->
 <section class="cta">
   <div class="cta-inner">
     <h2>Закажи прямо сейчас 🍕</h2>
@@ -475,21 +427,14 @@ footer p{font-size:12px;color:#5a5048}
 
 <footer><p>© Кафе SushiPizza «Westa» · Варна · 2026</p></footer>
 
-<!-- ПЛАВАЮЩАЯ КНОПКА WHATSAPP -->
 <button class="whatsapp-float" onclick="openWhatsApp()" title="Написать в WhatsApp">💬</button>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ============================================================
-// ДАННЫЕ
-// ============================================================
 const PHONE = '+79823309067';
 const PHONE_DISPLAY = '8 (982) 330-90-67';
 
-// ============================================================
-// СТАТУС ОТКРЫТО/ЗАКРЫТО
-// ============================================================
 function checkStatus() {
   const now = new Date();
   const hour = now.getHours();
@@ -507,9 +452,6 @@ function checkStatus() {
 checkStatus();
 setInterval(checkStatus, 60000);
 
-// ============================================================
-// TOAST
-// ============================================================
 let toastTimer = null;
 function showToast(text, isError) {
   const t = document.getElementById('toast');
@@ -519,32 +461,18 @@ function showToast(text, isError) {
   toastTimer = setTimeout(() => t.className = 'toast' + (isError ? ' error' : ''), 2500);
 }
 
-// ============================================================
-// ЗВОНОК
-// ============================================================
 function callPhone() {
-  // Пробуем открыть звонилку
-  try {
-    window.location.href = 'tel:' + PHONE;
-  } catch (e) {}
-  // Через 500мс показываем модалку с номером
-  setTimeout(() => {
-    showPhoneModal();
-  }, 500);
+  try { window.location.href = 'tel:' + PHONE; } catch (e) {}
+  setTimeout(() => { showPhoneModal(); }, 500);
 }
 
-// ============================================================
-// МОДАЛКА С ТЕЛЕФОНОМ
-// ============================================================
 function showPhoneModal() {
   const old = document.getElementById('phoneModal');
   if (old) old.remove();
-
   const modal = document.createElement('div');
   modal.id = 'phoneModal';
   modal.className = 'phone-modal';
   modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
-
   modal.innerHTML = `
     <div class="phone-modal-inner">
       <div class="big-icon">📞</div>
@@ -558,16 +486,11 @@ function showPhoneModal() {
   document.body.appendChild(modal);
 }
 
-// ============================================================
-// КОПИРОВАНИЕ ТЕЛЕФОНА
-// ============================================================
 function copyPhone() {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(PHONE_DISPLAY).then(() => {
       showToast('📋 Номер скопирован: ' + PHONE_DISPLAY);
-    }).catch(() => {
-      fallbackCopy(PHONE_DISPLAY);
-    });
+    }).catch(() => fallbackCopy(PHONE_DISPLAY));
   } else {
     fallbackCopy(PHONE_DISPLAY);
   }
@@ -580,42 +503,26 @@ function fallbackCopy(text) {
   ta.style.opacity = '0';
   document.body.appendChild(ta);
   ta.select();
-  try {
-    document.execCommand('copy');
-    showToast('📋 Номер скопирован');
-  } catch (e) {
-    showToast('❌ Не удалось скопировать', true);
-  }
+  try { document.execCommand('copy'); showToast('📋 Номер скопирован'); }
+  catch (e) { showToast('❌ Не удалось скопировать', true); }
   document.body.removeChild(ta);
 }
 
-// ============================================================
-// WHATSAPP
-// ============================================================
 function openWhatsApp(text) {
   const msg = text ? encodeURIComponent(text) : encodeURIComponent('Здравствуйте! Хочу сделать заказ');
   const url = 'https://wa.me/79823309067?text=' + msg;
-  try {
-    window.open(url, '_blank');
-  } catch (e) {
-    // Если не открылось — копируем телефон
+  try { window.open(url, '_blank'); }
+  catch (e) {
     copyPhone();
     showToast('📋 Скопировано. Откройте WhatsApp и напишите нам!');
   }
 }
 
-// ============================================================
-// ЗАКАЗ БЛЮДА
-// ============================================================
 function orderItem(name) {
   const msg = 'Здравствуйте! Хочу заказать: ' + name;
-  // Копируем телефон в буфер
   copyPhoneSilent();
   showToast('✅ Заказ: ' + name + ' · Открываем WhatsApp...');
-  // Открываем WhatsApp с текстом
-  setTimeout(() => {
-    openWhatsApp(msg);
-  }, 400);
+  setTimeout(() => { openWhatsApp(msg); }, 400);
 }
 
 function copyPhoneSilent() {
@@ -624,9 +531,6 @@ function copyPhoneSilent() {
   }
 }
 
-// ============================================================
-// ЗВЁЗДЫ ОТЗЫВОВ
-// ============================================================
 let selectedRating = 5;
 function setRating(n) {
   selectedRating = n;
@@ -636,16 +540,11 @@ function setRating(n) {
 }
 setRating(5);
 
-// ============================================================
-// ОТПРАВКА ОТЗЫВА
-// ============================================================
 async function submitReview() {
   const name = document.getElementById('reviewName').value.trim();
   const text = document.getElementById('reviewText').value.trim();
-
   if (!name) { showToast('❌ Введите имя', true); return; }
   if (!text) { showToast('❌ Напишите отзыв', true); return; }
-
   try {
     const res = await fetch('/api/review', {
       method: 'POST',
@@ -659,7 +558,6 @@ async function submitReview() {
       document.getElementById('reviewText').value = '';
       const currentRating = selectedRating;
       setRating(5);
-      // Добавим карточку в список
       const list = document.getElementById('reviewsList');
       const empty = list.querySelector('.empty-reviews');
       if (empty) empty.remove();
@@ -685,17 +583,12 @@ async function submitReview() {
   }
 }
 
-// ============================================================
-// БРОНИРОВАНИЕ
-// ============================================================
 async function submitBooking() {
   const name = document.getElementById('bookName').value.trim();
   const phone = document.getElementById('bookPhone').value.trim();
   const guests = document.getElementById('bookGuests').value || 2;
-
   if (!name) { showToast('❌ Введите имя', true); return; }
   if (!phone) { showToast('❌ Введите телефон', true); return; }
-
   try {
     const res = await fetch('/api/book', {
       method: 'POST',
@@ -719,7 +612,6 @@ function escapeHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// Плавный скролл
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const id = a.getAttribute('href');
